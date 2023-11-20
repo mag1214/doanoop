@@ -1,7 +1,6 @@
 import java.util.Scanner;
 
 public class Ve {
-    private String makh;
     private String mave;
     private String matour;
     private String loaive;
@@ -13,8 +12,7 @@ public class Ve {
 
     }
 
-    public Ve(String makh, String mave, String matour, String loaive, String giave) {
-        this.makh = makh;
+    public Ve(String mave, String matour, String loaive, String giave) {
         this.mave = mave;
         this.matour = matour;
         this.loaive = loaive;
@@ -22,7 +20,6 @@ public class Ve {
     }
 
     public Ve(Ve v1) {
-        makh = v1.makh;
         mave = v1.mave;
         matour = v1.matour;
         loaive = v1.loaive;
@@ -30,8 +27,6 @@ public class Ve {
     }
 
     public void nhap() {
-        System.out.print("Nhap ma khach hang: ");
-        makh = sc.nextLine();
         System.out.print("Nhap ma tour: ");
         matour = sc.nextLine();
         System.out.print("Nhap ma ve: ");
@@ -43,21 +38,12 @@ public class Ve {
     }
 
     public void xuat() {
-        System.out.format("%10s | ", makh);
-        System.out.format("%10s | ", mave);
-        System.out.format("%10s | ",matour);
+        System.out.format("%10s | ", matour);
+        System.out.format("%10s | ",mave);
         System.out.format("%10s | ", loaive);
         System.out.format("%15s%n", giave);
     }
 
-    public void setMakh(String makh) {
-        this.makh = makh;
-    }
-
-    public String getMakh() {
-        return makh;
-    }
-    
     public void setMatour(String matour) {
         this.matour = matour;
     }

@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 public class DSKH {
     int n;
-    KhachHang[] a;
+    static KhachHang[] a;
 
     Scanner sc = new Scanner(System.in);
 
@@ -20,9 +20,9 @@ public class DSKH {
 
     }
 
-    public DSKH(KhachHang[] a, int n){
-        this.a=a;
+    public DSKH(int n){
         this.n=n;
+        a = new KhachHang[n];
     }
 
     public void nhap(){

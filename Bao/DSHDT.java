@@ -1,3 +1,9 @@
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.EOFException;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -10,9 +16,9 @@ public class DSHDT {
     public DSHDT() {
     }
 
-    public DSHDT(HoaDonThu[] a, int n) {
-        this.a = a;
+    public DSHDT(int n) {
         this.n = n;
+        a = new HoaDonThu[n];
     }
 
     public void nhap(){
@@ -229,4 +235,41 @@ public class DSHDT {
         }
     }
 
+    public void writeDataToFile() throws IOException {
+        n = a.length;
+        DataOutputStream out = new DataOutputStream(new FileOutputStream("datakh.txt"));
+        for(int i = 0; i < n; i++) {
+            out.writeUTF(a[i].getMahd());
+            out.writeUTF(a[i].getMakh());
+            out.writeUTF(a[i].getNgaymua());
+            out.writeUTF(a[i].getManv());
+        }
+        out.close();
+    }
+
+    public void readDataFromFile() {
+        a = new HoaDonThu[500];
+        int i = 0;
+        try {
+            DataInputStream in = new DataInputStream(new FileInputStream("datakh.txt"));
+            try {
+                while(true) {
+                    a[i] = new HoaDonThu();
+                    a[i].setMahd(in.readUTF());
+                    a[i].setMakh(in.readUTF());
+                    a[i].setNgaymua(in.readUTF());
+                    a[i].setManv(in.readUTF());
+                    i++;
+                }
+            } catch (EOFException e) {
+
+            } finally {
+                n = i;
+                a = Arrays.copyOf(a, n);
+                in.close();
+            }
+        } catch (IOException e) {
+       
+        }
+    }
 }
