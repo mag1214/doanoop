@@ -14,12 +14,11 @@ public class HoaDonThu {
 
     }
 
-    public HoaDonThu(String mahd, String makh, String ngaymua, String manv, DSChiTietHDT a) {
+    public HoaDonThu(String mahd, String makh, String ngaymua, String manv) {
         this.mahd = mahd;
         this.makh = makh;
         this.ngaymua = ngaymua;
         this.manv = manv;
-        this.a = a;
     }
 
     public HoaDonThu(HoaDonThu a) {
@@ -27,7 +26,6 @@ public class HoaDonThu {
         makh = a.makh;
         ngaymua = a.ngaymua;
         manv = a.manv;
-        this.a = a.a;
     }
 
     public void nhap() {

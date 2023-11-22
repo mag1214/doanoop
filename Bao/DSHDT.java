@@ -237,7 +237,7 @@ public class DSHDT {
 
     public void writeDataToFile() throws IOException {
         n = a.length;
-        DataOutputStream out = new DataOutputStream(new FileOutputStream("datakh.txt"));
+        DataOutputStream out = new DataOutputStream(new FileOutputStream("datahdt.txt"));
         for(int i = 0; i < n; i++) {
             out.writeUTF(a[i].getMahd());
             out.writeUTF(a[i].getMakh());
@@ -251,7 +251,7 @@ public class DSHDT {
         a = new HoaDonThu[500];
         int i = 0;
         try {
-            DataInputStream in = new DataInputStream(new FileInputStream("datakh.txt"));
+            DataInputStream in = new DataInputStream(new FileInputStream("datahdt.txt"));
             try {
                 while(true) {
                     a[i] = new HoaDonThu();

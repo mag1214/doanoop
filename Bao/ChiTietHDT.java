@@ -15,12 +15,11 @@ public class ChiTietHDT {
 
     }
 
-    public ChiTietHDT(String mahd, String makh,String mave, int soluong, DSVe a) {
+    public ChiTietHDT(String mahd, String makh,String mave, int soluong) {
         this.mahd = mahd;
         this.makh = makh;
         this.soluong = soluong;
         this.mave = mave;
-        this.a = a;
     }
 
     public ChiTietHDT(ChiTietHDT a) {
@@ -28,7 +27,6 @@ public class ChiTietHDT {
         makh = a.makh;
         mave = a.mave;
         soluong = a.soluong;
-        this.a = a.a;
     }
 
     public void nhap() {
@@ -64,6 +62,22 @@ public class ChiTietHDT {
 
     public String getMakh() {
         return makh;
+    }
+
+    public void setMave(String mave) {
+        this.mave = mave;
+    }
+
+    public String getMave() {
+        return mave;
+    }
+
+    public void setSoluong(int soluong) {
+        this.soluong = soluong;
+    }
+
+    public int getSoluong() {
+        return soluong;
     }
 
     public int getDongia() {

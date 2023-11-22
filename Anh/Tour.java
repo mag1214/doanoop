@@ -1,5 +1,3 @@
-package Class;
-
 import java.io.Serializable;
 import java.util.Scanner;
 

@@ -1,5 +1,3 @@
-package Class;
-
 public class TourTrongNuoc extends Tour{
     private String TinhThanh;
     

@@ -1,5 +1,3 @@
-package Class;
-
 public class TourNgoaiNuoc extends Tour{
     private String QuocGia, ThoiHanVisa;
     
