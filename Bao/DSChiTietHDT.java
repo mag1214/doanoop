@@ -208,7 +208,7 @@ public class DSChiTietHDT {
 
     public void writeDataToFile() throws IOException {
         n = a.length;
-        DataOutputStream out = new DataOutputStream(new FileOutputStream("datacthdt.txt"));
+        DataOutputStream out = new DataOutputStream(new FileOutputStream("dataCtHdt.txt"));
         for(int i = 0; i < n; i++) {
             out.writeUTF(a[i].getMahd());
             out.writeUTF(a[i].getMakh());
@@ -222,7 +222,7 @@ public class DSChiTietHDT {
         a = new ChiTietHDT[500];
         int i = 0;
         try {
-            DataInputStream in = new DataInputStream(new FileInputStream("datacthdt.txt"));
+            DataInputStream in = new DataInputStream(new FileInputStream("dataCtHdt.txt"));
             try {
                 while(true) {
                     a[i] = new ChiTietHDT();
