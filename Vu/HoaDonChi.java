@@ -6,6 +6,7 @@ public class HoaDonChi {
     private String makehoachtua;
     private String manhanvien;
     private String mahoadon;
+    private double tongchiphi;
     Scanner sc = new Scanner(System.in);
     public HoaDonChi()
     {
@@ -57,7 +58,9 @@ public class HoaDonChi {
     {
         this.manhanvien = manhanvien;
     }
-    
+     public static void setTongchiphi(double tongchiphi2) {
+    }
+
     public void nhap()
     {
         System.out.print("Nhap ma hoa don: ");
@@ -76,6 +79,6 @@ public class HoaDonChi {
         System.out.format("%13s | ", makhachhang);
         System.out.format("%13s | ", makehoachtua);
         System.out.format("%13s%n ", manhanvien);
-
+        System.out.format("%15s%n", tongchiphi);  // Hiển thị tổng chi phí
     }
 }

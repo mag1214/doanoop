@@ -1,5 +1,11 @@
-import java.util.Scanner;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.EOFException;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class DanhSachHoaDonChi
 {
@@ -261,6 +267,7 @@ public class DanhSachHoaDonChi
             }
         }
     }
+    
     public void xoa(){
         System.out.print("Nhap ma hoa don muon xoa: ");
         String id = sc.nextLine();
@@ -290,6 +297,45 @@ public class DanhSachHoaDonChi
             }
             a = Arrays.copyOf(a, n - 1);
             n--;
+        }
+    }
+    
+
+    public void writeDataToFile() throws IOException {
+        n = a.length;
+        DataOutputStream out = new DataOutputStream(new FileOutputStream("dataKh.txt"));
+        for(int i = 0; i < n; i++) {
+            out.writeUTF(a[i].getMaHoaDon());
+            out.writeUTF(a[i].getMaKeHoachTua());
+            out.writeUTF(a[i].getMaKhachHang());
+            out.writeUTF(a[i].getMaNhanVien());
+        }
+        out.close();
+    }
+
+    public void readDataFromFile() {
+        a = new HoaDonChi[500];
+        int i = 0;
+        try {
+            DataInputStream in = new DataInputStream(new FileInputStream("dataKh.txt"));
+            try {
+                while(true) {
+                    a[i] = new HoaDonChi();
+                    a[i].setMahoadon(in.readUTF());
+                    a[i].setMakehoachtua(in.readUTF());
+                    a[i].setMakhachhang(in.readUTF());
+                    a[i].setManhanvien(in.readUTF());
+                    i++;
+                }
+            } catch (EOFException e) {
+
+            } finally {
+                n = i;
+                a = Arrays.copyOf(a, n);
+                in.close();
+            }
+        } catch (IOException e) {
+       
         }
     }
 }
