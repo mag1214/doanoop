@@ -7,6 +7,7 @@ public class KhachHang {
     private String ten;
     private String phai;
     private String ngaysinh;
+    private String sdt;
 
     transient Scanner sc = new Scanner(System.in);
 
@@ -14,12 +15,13 @@ public class KhachHang {
 
     }
 
-    public KhachHang(String ma, String ho, String ten, String phai, String ngaysinh) {
+    public KhachHang(String ma, String ho, String ten, String phai, String ngaysinh, String sdt) {
         this.ma = ma;
         this.ho = ho;
         this.ten = ten;
         this.phai = phai;
         this.ngaysinh = ngaysinh;
+        this.sdt = sdt;
     }
 
     public KhachHang(KhachHang a) {
@@ -28,19 +30,22 @@ public class KhachHang {
         ten = a.ten;
         phai = a.phai;
         ngaysinh = a.ngaysinh;
+        sdt = a.sdt;
     }
 
     public void nhap() {
         System.out.print("Nhap ma khach hang: ");
-        ma=sc.nextLine();
+        ma = sc.nextLine();
         System.out.print("Nhap ho: ");
-        ho=sc.nextLine();
+        ho = sc.nextLine();
         System.out.print("Nhap ten:");
-        ten=sc.nextLine();
+        ten = sc.nextLine();
         System.out.print("Nhap gioi tinh: ");
-        phai=sc.nextLine();
+        phai = sc.nextLine();
         System.out.print("Nhap ngay sinh: ");
-        ngaysinh=sc.nextLine();
+        ngaysinh = sc.nextLine();
+        System.out.println("Nhap so dien thoai: ");
+        sdt = sc.nextLine();
     }
 
     public void xuat() {
@@ -48,7 +53,8 @@ public class KhachHang {
         System.out.format("%10s | ", ho);
         System.out.format("%15s | ",ten);
         System.out.format("%5s | ", phai);
-        System.out.format("%10s%n", ngaysinh);
+        System.out.format("%10s", ngaysinh);
+        System.out.format("%11s%n", sdt);
     }
 
     public int getTuoi() {
