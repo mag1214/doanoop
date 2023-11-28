@@ -5,6 +5,9 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Scanner;
 
 public class DSHDT {
@@ -201,6 +204,51 @@ public class DSHDT {
         }
         if(!isExisted) 
             System.out.println("Khong tim thay ma nhan vien!");
+    }
+
+    private Date changeDate(String dateString) {
+        String pattern = "dd-MM-yyyy HH:mm:ss"; 
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+        try {
+            return sdf.parse(dateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private void swapDate(String date1, String date2) {
+        if(changeDate(date1).compareTo(changeDate(date2)) > 0) {
+            String temp = date1;
+            date1 = date2;
+            date2 = temp;
+        }
+    }
+
+    public void timkiemtheongay() {
+        System.out.println("Nhap khung thoi gian muon xuat hoa don: ");
+        String time1 = sc.nextLine();
+        String time2 = sc.nextLine();
+        swapDate(time1, time2);
+        n = a.length;
+        for(int i = 0; i < n; i++) {
+            if(changeDate(a[i].getNgaymua()).compareTo(changeDate(time1)) > 0 && changeDate(a[i].getNgaymua()).compareTo(changeDate(time2)) < 0) {
+                a[i].xuat();
+            }
+        }
+    }
+
+    public void timkiemtheogia() {
+        System.out.println("Nhap khung gia muon tim: ");
+        int gia1 = sc.nextInt();
+        int gia2 = sc.nextInt();
+        sc.nextLine();
+        n = a.length;
+        for(int i = 0; i < n; i++) {
+            if(a[i].getTonggia() > gia1 && a[i].getTonggia() < gia2) {
+                a[i].xuat();
+            }
+        }
     }
 
     public void xoa(){

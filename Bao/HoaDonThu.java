@@ -78,4 +78,8 @@ public class HoaDonThu {
     public String getNgaymua() {
         return ngaymua;
     }
+
+    public int getTonggia() {
+        return tonggia;
+    }
 }

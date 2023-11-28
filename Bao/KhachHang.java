@@ -1,8 +1,7 @@
-import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Scanner;
 
-public class KhachHang implements Serializable {
+public class KhachHang {
     private String ma;
     private String ho;
     private String ten;
