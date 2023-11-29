@@ -1,3 +1,4 @@
+package Class;
 import java.util.Scanner;
 public class KeHoachTour
 {
@@ -76,10 +77,10 @@ public class KeHoachTour
     }
     public void Xuat()
     {
-        System.out.println("Ma ke hoach: "+MaKeHoach);
-        System.out.println("Ten tour: "+MaTour);
-        System.out.println("Noi khoi hanh: "+MaNhanVien);
-        System.out.println("Ngay di: "+NgayDi);
-        System.out.println("Ngay ve: "+NgayVe);
+        System.out.format("%5s\t | ", MaKeHoach);
+        System.out.format("%5s\t | ", MaTour);
+        System.out.format("%5s\t | ", MaNhanVien);
+        System.out.format("%5s\t | ", NgayDi);
+        System.out.format("%5s\t |", NgayVe);
     }
 }

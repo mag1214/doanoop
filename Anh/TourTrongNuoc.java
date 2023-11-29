@@ -1,3 +1,5 @@
+package Class;
+
 public class TourTrongNuoc extends Tour{
     private String TinhThanh;
     
@@ -30,14 +32,15 @@ public class TourTrongNuoc extends Tour{
     public void Xuat()
     {
         super.Xuat();
-        System.out.println("Tinh thanh cua dia danh den: "+TinhThanh);
+        System.out.format("%5s\t | ", PhuongTien());
+        System.out.format("%5s\t |%n  ", TinhThanh);
     }
     @Override
     public String PhuongTien() {
-       return "Phuong tien: Xe khach";
+       return "Xe khach";
     }
     @Override
     public String toString() {
-        return "Tour ngoai nuoc\n" + super.toString() +"\nTinh thah den: " + getTinhThanh();
+        return "Tour ngoai nuoc\n" + super.toString() +"\nTinh thah den: " + getTinhThanh()+"\n"+ PhuongTien();
     }
 }

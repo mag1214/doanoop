@@ -1,27 +1,23 @@
+package Class;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.EOFException;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class DanhSachTour {
+    static Tour[] dst;
     int n;
-    Tour[] dst = new Tour[n];
     int SoTour=0;
     Scanner sc = new Scanner(System.in);
     public DanhSachTour(){}
-    public DanhSachTour(int n, Tour[] dst)
+    public DanhSachTour(int n) 
     {
-        this.n=n;
-        this.dst=dst;
-    }
-    public DanhSachTour(DanhSachTour ds)
-    {
-        n=ds.n;
-        dst=ds.dst;
+        this.n = n;
+        dst = new Tour[n];
     }
     public int getN()
     {
@@ -85,10 +81,16 @@ public class DanhSachTour {
     public void Xuat()
     {
         System.out.println("Danh sach cac tour");
+        System.out.format("%5s\t|%5s\t|%5s\t|%5s\t|%5s\t|%5s\t|%5s\t|%5s\n",
+                  "Ma Tour", "Ten Tour", "Noi Khoi Hanh", "Noi den", "Thoi Diem Di","Phuong Tien", "Tinh Thanh/Quoc Gia", "Thoi Han ViSa");
+
+// Dùng %10s để đặt chiều rộng tối thiểu của mỗi trường, và - để căn lề sang trái.
+// Bạn có thể điều chỉnh các giá trị trong %10s để thích nghi với độ rộng mong muốn.
+
         for(int i=0; i<n; i++)
         {
             dst[i].Xuat();
-          //  dst[i].PhuongTien();
+            dst[i].PhuongTien();
         }
     }
     public void Them()
@@ -352,52 +354,94 @@ public class DanhSachTour {
         System.out.println("| So den nuoc An Do    | " +Count3+ " |");
         System.out.println("----------------------------");
     }
-    public void GhiDuLieuVaoFile() {
-        try {
-                FileOutputStream fos = new FileOutputStream("Tour.dat");
-                ObjectOutputStream oos = new ObjectOutputStream(fos);
-                for (int i = 0; i < dst.length; i++) {
-                        
-                        oos.writeObject(dst[i]);
-                        oos.writeObject(dst[i].PhuongTien());
-                    }
-                    oos.close();
-                    fos.close();
-            } 
-            catch(FileNotFoundException e)
-            {
-                e.printStackTrace();
-            }
-            catch(IOException e)
-            {
-                e.printStackTrace();
-            }
-        
-    }
-    public void DocDuLieuTrongFile()
+    public void GhiDuLieuVaoFile() throws IOException
     {
-        Object obj=null;
-            try 
+        n=dst.length;
+        DataOutputStream out = new DataOutputStream(new FileOutputStream("Tour.txt"));
+        for (int i = 0; i < n; i++) 
+        {       
+            if(dst[i] instanceof TourTrongNuoc)
             {
-                FileInputStream fis = new FileInputStream("Tour.dat");
-                ObjectInputStream ois = new ObjectInputStream(fis);
-                while(fis.available() > 0)
+                out.writeInt(1);
+                TourTrongNuoc ttn = new TourTrongNuoc();
+                ttn=(TourTrongNuoc)dst[i];
+                out.writeUTF(ttn.getMaTour());
+                out.writeUTF(ttn.getTenTour());
+                out.writeUTF(ttn.getNoiKhoiHanh());
+                out.writeUTF(ttn.getNoiDen());
+                out.writeUTF(ttn.getThoiDiemDi());
+                out.writeUTF(ttn.getTinhThanh());                        
+            }
+            else if(dst[i] instanceof TourNgoaiNuoc)
+            {
+                out.writeInt(2);
+                TourNgoaiNuoc tnc = new TourNgoaiNuoc();
+                tnc = (TourNgoaiNuoc)dst[i];
+                out.writeUTF(tnc.getMaTour());
+                out.writeUTF(tnc.getTenTour());
+                out.writeUTF(tnc.getNoiKhoiHanh());
+                out.writeUTF(tnc.getNoiDen());
+                out.writeUTF(tnc.getThoiDiemDi());
+                out.writeUTF(tnc.getQuocGia());
+                out.writeUTF(tnc.getThoiHanVisa()); 
+
+            }
+        }
+        out.close();
+    }
+    public void DocDuLieuTuFile() 
+    {
+        int i=0;
+        dst = new Tour[100];
+        try 
+        {
+            DataInputStream in = new DataInputStream(new FileInputStream("Tour.txt"));
+            try
+            {
+                while (in.available() > 0) 
                 {
-                    obj = ois.readObject();
-                    System.out.println(obj);
+                    // Kiểm tra kiểu dữ liệu
+                    int kieuDuLieu = in.readInt();
+                    // Đọc dữ liệu tùy thuộc vào kiểu dữ liệu
+                    switch (kieuDuLieu)
+                    {
+                        case 1:
+                            TourTrongNuoc ttn = new TourTrongNuoc();
+                            ttn.setMaTour(in.readUTF());
+                            ttn.setTenTour(in.readUTF());
+                            ttn.setNoiKhoiHanh(in.readUTF());
+                            ttn.setNoiDen(in.readUTF());
+                            ttn.setThoiDiemDi(in.readUTF());
+                            ttn.setTinhThanh(in.readUTF());
+                            dst[i]=ttn;
+                            i++;
+                            break;
+                        case 2:
+                            TourNgoaiNuoc tnc = new TourNgoaiNuoc();
+                            tnc.setMaTour(in.readUTF());
+                            tnc.setTenTour(in.readUTF());
+                            tnc.setNoiKhoiHanh(in.readUTF());
+                            tnc.setNoiDen(in.readUTF());
+                            tnc.setThoiDiemDi(in.readUTF());
+                            tnc.setQuocGia(in.readUTF());
+                            tnc.setThoiHanVisa(in.readUTF());
+                            dst[i]=tnc;
+                            i++;
+                            break;
+                        default:
+                            System.out.println("Kiểu dữ liệu không xác định.");
+                            break;
+                    }
                 }
-                ois.close();
-                fis.close();
             } 
-            catch(FileNotFoundException e)
+            catch (EOFException e) { } 
+            finally 
             {
-                e.printStackTrace();
+                n=i;
+                dst = Arrays.copyOf(dst, n);
+                in.close();
             }
-            catch(IOException e)
-            {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
+        }
+        catch (IOException e) {}
     }
 }

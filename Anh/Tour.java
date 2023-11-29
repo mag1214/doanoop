@@ -1,3 +1,5 @@
+package Class;
+
 import java.io.Serializable;
 import java.util.Scanner;
 
@@ -83,14 +85,14 @@ public abstract class Tour implements Serializable{
     }
     public void Xuat()
     {
-        System.out.println("Ma tour: "+MaTour);
-        System.out.println("Ten tour: "+TenTour);
-        System.out.println("Noi khoi hanh: "+NoiKhoiHanh);
-        System.out.println("Noi den: "+NoiDen);
-        System.out.println("Thoi diem di: "+ThoiDiemDi);
+        System.out.format("%5s\t | ", MaTour);
+        System.out.format("%5s\t | ", TenTour);
+        System.out.format("%5s\t | ", NoiKhoiHanh);
+        System.out.format("%5s\t | ", NoiDen);
+        System.out.format("%5s\t |", ThoiDiemDi);
     }
     public String toString() {
         return "Ma: " + getMaTour() + "\nTen: " + getTenTour() + "\nNoi khoi hah: " + getNoiKhoiHanh() + "\nNoi den:"+getNoiDen()
-        + "\nThoi diem di: "+ getThoiDiemDi();
+        + "\nThoi diem di: "+ getThoiDiemDi()+"\n"+ PhuongTien();
     }
 }

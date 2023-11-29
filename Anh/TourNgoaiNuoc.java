@@ -1,3 +1,5 @@
+package Class;
+
 public class TourNgoaiNuoc extends Tour{
     private String QuocGia, ThoiHanVisa;
     
@@ -38,14 +40,15 @@ public class TourNgoaiNuoc extends Tour{
     @Override public void Xuat()
     {
         super.Xuat();
-        System.out.println("Quoc gia den den: "+QuocGia);
-        System.out.println("Thoi han visa: "+ThoiHanVisa);
+        System.out.format("%5s\t | ", PhuongTien());
+        System.out.format("%5s\t | ", QuocGia);
+        System.out.format("%5s\t |%n  ", ThoiHanVisa);
     }
     @Override public String PhuongTien() {
-        return "Phuong tien: May Bay";
+        return "May Bay";
     }
     @Override
     public String toString() {
-        return "Tour ngoai nuoc\n" + super.toString() +"\nQuoc gia den: " + getQuocGia() + "\nThoi han visa: "+getThoiHanVisa();
+        return "Tour ngoai nuoc\n" + super.toString() +"\nQuoc gia den: " + getQuocGia() + "\nThoi han visa: "+getThoiHanVisa()+"\n" + PhuongTien();
     }
 }

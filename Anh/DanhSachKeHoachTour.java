@@ -1,30 +1,42 @@
+package Class;
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.EOFException;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class DanhSachKeHoachTour {
     int n;
-    KeHoachTour[] kht = new KeHoachTour[n];
+    static KeHoachTour[] kht;
     Scanner sc = new Scanner(System.in);
     public DanhSachKeHoachTour(){}
-    public DanhSachKeHoachTour(int n, KeHoachTour[] kht)
+    public DanhSachKeHoachTour(int n) 
     {
-        this.n=n;
-        this.kht=kht;
-    }
-    public DanhSachKeHoachTour(DanhSachKeHoachTour ds)
-    {
-        n=ds.n;
-        kht=ds.kht;
+        this.n = n;
+        kht = new KeHoachTour[n];
     }
     public void nhap()
     {
+        String [] CacMaTour = new String[100];
         System.out.print("Nhap so danh sach ke hoach: ");
         n = sc.nextInt();
         sc.nextLine();
         kht = new KeHoachTour[n];
-        for(int i = 0; i < n; i++){
-            kht[i]= new KeHoachTour();
+        for(int i = 0; i < n; i++)
+        {
             kht[i].Nhap();
+            CacMaTour[i]=kht[i].getMaKeHoach();
+            for(int j=0 ; j <= i; j++)
+            {
+                if(kht[i].getMaKeHoach().equals(CacMaTour[j]))
+                {
+
+                }
+            }
         }
     }
     public void DuLieuCung()
@@ -210,6 +222,47 @@ public class DanhSachKeHoachTour {
             System.out.println("khong tim thay ");
         }
     }
+    public void GhiDuLieuVaoF() throws IOException
+    {
+        n = kht.length;
+        DataOutputStream out = new DataOutputStream(new FileOutputStream("KeHoachTour.txt"));
+        for(int i = 0; i < n; i++) {
+            out.writeUTF(kht[i].getMaKeHoach());
+            out.writeUTF(kht[i].getMaTour());
+            out.writeUTF(kht[i].getMaNhanVien());
+            out.writeUTF(kht[i].getNgaydi());
+            out.writeUTF(kht[i].getNgayVe());
+        }
+        out.close();
+    }
+
+    public void DocDuLieuTuFile() {
+       kht = new KeHoachTour[500];
+        int i = 0;
+        try {
+            DataInputStream in = new DataInputStream(new FileInputStream("KeHoachTour.txt"));
+            try {
+                while(true) {
+                    kht[i] = new KeHoachTour();
+                    kht[i].setMaKeHoach(in.readUTF());
+                    kht[i].setMaTour(in.readUTF());
+                    kht[i].setMaNhanVien(in.readUTF());
+                    kht[i].setNgaydi(in.readUTF());
+                    kht[i].setNgayVe(in.readUTF());
+                    i++;
+                }
+            } catch (EOFException e) {
+
+            } finally {
+                n = i;
+                kht = Arrays.copyOf(kht, n);
+                in.close();
+            }
+        } catch (IOException e) {
+       
+        }
+    }
+
     public String TachNam(String s)
     {
         String[] NgayThangNam = s.split("/");
@@ -239,5 +292,7 @@ public class DanhSachKeHoachTour {
         System.out.println("| So Tour tu nam 2010 den 2014 | " +Count3+ " |");
         System.out.println("| So Tour tu nam 2015 den 2020 | " +Count4+ " |");
         System.out.println("------------------------------------");
+    }
+    public void GhiDuLieuVaoFile() {
     }
 }
