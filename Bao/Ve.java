@@ -33,15 +33,23 @@ public class Ve {
         mave = sc.nextLine();
         System.out.print("Nhap loai ve: ");
         loaive = sc.nextLine();
+        while(true) {
+            if(loaive.equals("Tre em") || loaive.equals("Nguoi Lon")) {
+                break;
+            }
+            System.err.println("Chi co ve 'Nguoi lon' va 'Tre em'!!!");
+            System.err.println("Nhan Enter de nhap lai!!!");
+            sc.nextLine();
+            System.out.println("Nhap lai loai ve: ");
+            String lv = sc.nextLine();
+            setLoaive(lv);
+        }
         System.out.print("Nhap gia ve: ");
         giave = sc.nextLine();
     }
 
     public void xuat() {
-        System.out.format("%10s | ", matour);
-        System.out.format("%10s | ",mave);
-        System.out.format("%10s | ", loaive);
-        System.out.format("%15s%n", giave);
+        System.out.format(" %10s | %10s | %10s | %15s ||\n", matour, mave, loaive, giave);
     }
 
     public void setMatour(String matour) {

@@ -1,3 +1,5 @@
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Scanner;
 
@@ -42,19 +44,58 @@ public class KhachHang {
         ten = sc.nextLine();
         System.out.print("Nhap gioi tinh: ");
         phai = sc.nextLine();
+        while(true) {
+            if(phai.equals("Nam") || phai.equals("Nu")) {
+                break;
+            }
+            System.err.println("Gioi tinh chi duoc nhap 'Nam' hoac 'Nu'!!!");
+            System.err.println("Nhan Enter de nhap lai!!!");
+            sc.nextLine();
+            System.out.println("Nhap lai gioi tinh cua khach hang: ");
+            String gt = sc.nextLine();
+            setPhai(gt);
+        }
         System.out.print("Nhap ngay sinh: ");
         ngaysinh = sc.nextLine();
-        System.out.println("Nhap so dien thoai: ");
+        while(true) {
+            if(checkDate(ngaysinh)) {
+                break;
+            }
+            System.err.println("Dinh dang cua ngay phai la dd/MM/yyyy!!!");
+            System.err.println("Nhan Enter de nhap lai!!!");
+            sc.nextLine();
+            System.out.println("Nhap lai ngay sinh cua khach hang: ");
+            String ns = sc.nextLine();
+            setNgaysinh(ns);
+        }
+        System.out.print("Nhap so dien thoai: ");
         sdt = sc.nextLine();
+        while(true) {
+            if(sdt.length() == 10) {
+                break;
+            }
+            System.err.println("So dien thoai khong du 10 so!!!");
+            System.err.println("Nhan Enter de nhap lai!!!");
+            sc.nextLine();
+            System.out.println("Nhap lai so dien thoai cua khach hang: ");
+            String dt = sc.nextLine();
+            setSdt(dt);
+        }
     }
 
     public void xuat() {
-        System.out.format("%13s | ", ma);
-        System.out.format("%10s | ", ho);
-        System.out.format("%15s | ",ten);
-        System.out.format("%5s | ", phai);
-        System.out.format("%10s", ngaysinh);
-        System.out.format("%11s%n", sdt);
+        System.out.format(" %10s | %8s | %20s | %10s | %9s | %11s ||\n", ma, ho, ten, ngaysinh, phai, sdt);
+    }
+
+    public boolean checkDate(String date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        sdf.setLenient(false);
+		try {
+			sdf.parse(date);
+		}catch(ParseException e) {
+			return false;
+		}
+		return true;
     }
 
     public int getTuoi() {
@@ -107,8 +148,11 @@ public class KhachHang {
         return ngaysinh;
     }
 
-    @Override
-    public String toString() {
-        return ma + "\t" + ho + "\t" + ten + "\t" + phai + "\t" + ngaysinh;
+    public void setSdt(String sdt) {
+        this.sdt = sdt;
+    }
+
+    public String getSdt() {
+        return sdt;
     }
 }

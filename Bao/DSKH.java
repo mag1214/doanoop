@@ -25,7 +25,16 @@ public class DSKH {
         a = new KhachHang[n];
     }
 
-    public void nhap(){
+    public boolean isIdExist(String id, int x) {
+        for(int i = 0; i < x; i++) {
+            if(a[i].getMa().equals(id)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void nhap()throws IOException{
         System.out.print("Nhap n khach hang dau tien: ");
         n = sc.nextInt();
         sc.nextLine();
@@ -33,33 +42,57 @@ public class DSKH {
         for(int i = 0; i < n; i++){
             a[i]= new KhachHang();
             a[i].nhap();
+            if(i > 0) {
+                while(isIdExist(a[i].getMa(), i)) {
+                System.err.println("Ma khach hang vua nhap bi trung voi ma khach hang khac!!!");
+                System.err.println("Nhan Enter de nhap lai!!!");
+                sc.nextLine();
+                System.out.println("Nhap lai ma khach hang:");
+                String id = sc.nextLine();
+                a[i].setMa(id);
+                }
+            }
         }
+        writeDataToFile();
     }
 
     public void xuat() {
-        System.out.println("Danh sach cac khach hang: ");
+        System.out.println("--------------------------------------Danh sach khach hang---------------------------------------");
+        System.out.println("------------------------------------------------------------------------------------------------");
+		System.out.format("|| %5s | %10s | %8s | %20s | %10s | %9s | %11s ||\n", "Stt", "Ma", "Ho", "Ten", "Ngay sinh", "Gioi Tinh", "Sdt");
         for(int i = 0; i < n; i++) {
+            System.out.format("|| %5d |", i + 1);
             a[i].xuat();
         }
     }
 
-    public void them() {
+    public void them() throws IOException {
         n = a.length;
         a = Arrays.copyOf(a, n + 1);
         a[n] = new KhachHang();
         System.out.println("Nhap thong tin khach hang can them: ");
         a[n].nhap();
+        while(isIdExist(a[n].getMa(), n)) {
+                System.err.println("Ma khach hang vua nhap bi trung voi ma khach hang khac!!!");
+                System.err.println("Nhan Enter de nhap lai!!!");
+                sc.nextLine();
+                System.out.println("Nhap lai ma khach hang:");
+                String id = sc.nextLine();
+                a[n].setMa(id);
+        }
         n++;
+        writeDataToFile();
     }
 
-    public void them(KhachHang x){
+    public void them(KhachHang x) throws IOException{
         n = a.length;
         a = Arrays.copyOf(a, n + 1);
         a[n] = new KhachHang(x);
         n++;
+        writeDataToFile();
     }
     
-    public void sua(){
+    public void sua() throws IOException {
         System.out.print("Nhap ma khach hang can duoc sua: ");
         String id = sc.nextLine();
         boolean isExisted = false;
@@ -70,6 +103,14 @@ public class DSKH {
                 System.out.print("Ma khach hang duoc sua thanh: ");
                 String ma = sc.nextLine();
                 a[i].setMa(ma);
+                while(isIdExist(a[i].getMa(), i)) {
+                    System.err.println("Ma khach hang vua nhap bi trung voi ma khach hang khac!!!");
+                    System.err.println("Nhan Enter de nhap lai!!!");
+                    sc.nextLine();
+                    System.out.println("Nhap lai ma khach hang:");
+                    String makh = sc.nextLine();
+                    a[i].setMa(makh);
+                }
                 System.out.print("Ho duoc sua thanh: ");
                 String ho = sc.nextLine();
                 a[i].setHo(ho);
@@ -82,6 +123,7 @@ public class DSKH {
                 System.out.print("Ngay sinh duoc sua thanh: ");
                 String ngaysinh=sc.nextLine();
                 a[i].setNgaysinh(ngaysinh);
+                writeDataToFile();
                 break;
             }
         }
@@ -89,7 +131,7 @@ public class DSKH {
             System.out.println("Khong tim thay ma khach hang!");
     }
 
-    public void sua(String id) {
+    public void sua(String id) throws IOException {
         boolean isExisted = false;
         n = a.length;
         for (int i = 0; i < n; i++) {
@@ -98,6 +140,14 @@ public class DSKH {
                 System.out.print("Ma khach hang duoc sua thanh: ");
                 String ma = sc.nextLine();
                 a[i].setMa(ma);
+                while(isIdExist(a[i].getMa(), i)) {
+                    System.err.println("Ma khach hang vua nhap bi trung voi ma khach hang khac!!!");
+                    System.err.println("Nhan Enter de nhap lai!!!");
+                    sc.nextLine();
+                    System.out.println("Nhap lai ma khach hang:");
+                    String makh = sc.nextLine();
+                    a[i].setMa(makh);
+                }
                 System.out.print("Ho duoc sua thanh: ");
                 String ho = sc.nextLine();
                 a[i].setHo(ho);
@@ -110,6 +160,7 @@ public class DSKH {
                 System.out.print("Ngay sinh duoc sua thanh: ");
                 String ngaysinh=sc.nextLine();
                 a[i].setNgaysinh(ngaysinh);
+                writeDataToFile();
                 break;
             }
         }
@@ -211,7 +262,7 @@ public class DSKH {
             System.out.println("Khong co khach hang nao mang ten "+ten+"!");
     }
 
-    public void xoa(){
+    public void xoa() throws IOException {
         System.out.print("Nhap ma khach hang muon xoa: ");
         String id = sc.nextLine();
         n = a.length;
@@ -225,10 +276,11 @@ public class DSKH {
             }
             a = Arrays.copyOf(a, n - 1);
             n--;
+            writeDataToFile();
         }
     }
     
-    public void xoa(String id){
+    public void xoa(String id) throws IOException{
         n = a.length;
         int vitri = timkiemma(id);
         if(vitri == -1) 
@@ -240,6 +292,7 @@ public class DSKH {
             }
             a = Arrays.copyOf(a, n - 1);
             n--;
+            writeDataToFile();
         }
     }
 
@@ -320,7 +373,140 @@ public class DSKH {
                 in.close();
             }
         } catch (IOException e) {
-       
+    
+        }
+    }
+
+//Menu quan li
+
+    public void showMenu() {
+        System.out.println("-----------Option-----------");
+        System.out.println("1. Them khach hang.");
+        System.out.println("2. Xoa khach hang.");
+        System.out.println("3. Sua thong tin khach hang.");
+        System.out.println("4. Tim kiem khach hang.");
+        System.out.println("5. Thong ke khach hang.");
+        System.out.println("6. Xem danh sach khach hang.");
+        System.out.println("0. Thoat.");
+        System.out.println("----------------------------");
+        System.out.print("Choose: ");
+    }
+
+    public void showMenutimkiem(){
+        System.out.println("-----------Option-----------");
+        System.out.println("1. Tim kiem bang ma.");
+        System.out.println("2. Tim kiem bang ho.");
+        System.out.println("3. Tim kiem bang ten.");
+        System.out.println("0. Thoat.");
+        System.out.println("----------------------------");
+        System.out.print("Choose: ");
+    }
+
+    public void showMenuthongke(){
+        System.out.println("-----------Option-----------");
+        System.out.println("1. Thong ke gioi tinh.");
+        System.out.println("2. Thong ke do tuoi.");
+        System.out.println("0. Thoat.");
+        System.out.println("----------------------------");
+        System.out.print("Choose: ");
+    }
+
+    public void Menutimkiem(){
+        String choose = null;
+        boolean exit = false;
+        showMenutimkiem();
+        while (true) {
+            choose = sc.nextLine();
+            switch (choose) {
+            case "1":
+                timkiem();
+                break;
+            case "2":
+                timkiemho();
+                break;
+            case "3":
+                timkiemten();
+                break;
+            case "0":
+                System.out.println("Da thoat!");
+                exit = true;
+                break;
+            default:
+                System.err.println("Loi! Hay chon lai:");
+                break;
+            }
+            if (exit) {
+                break;
+            }
+            showMenutimkiem();
+        }  
+    }
+
+    public void Menuthongke(){
+        String choose = null;
+        boolean exit = false;
+        showMenuthongke();
+        while (true) {
+            choose = sc.nextLine();
+            switch (choose) {
+            case "1":
+                thongkegioitinh();
+                break;
+            case "2":
+                thongketuoi();
+                break;
+            case "0":
+                System.out.println("Da thoat!");
+                exit = true;
+                break;
+            default:
+                System.err.println("Loi! Hay chon lai:");
+                break;
+            }
+            if (exit) {
+                break;
+            }
+            showMenuthongke();
+        }  
+    }
+
+    public void Menu() throws IOException {
+        String choose = null;
+        boolean exit = false;
+        showMenu();
+        while (true) {
+            choose = sc.nextLine();
+            switch (choose) {
+            case "1":
+                them();
+                break;
+            case "2":
+                xoa();
+                break;
+            case "3":
+                sua();
+                break;
+            case "4":
+                Menutimkiem();
+                break;
+            case "5":
+                Menuthongke();
+                break;
+            case "6":
+                xuat();
+                break;
+            case "0":
+                System.out.println("Da thoat!");
+                exit = true;
+                break;
+            default:
+                System.err.println("Loi! Hay chon lai:");
+                break;
+            }
+            if (exit) {
+                break;
+            }
+            showMenu();
         }
     }
 }

@@ -12,8 +12,8 @@ public class ChiTietHDT {
     Scanner sc = new Scanner(System.in);
 
     public ChiTietHDT() {
-
-    }
+        
+    }   
 
     public ChiTietHDT(String mahd, String makh,String mave, int soluong) {
         this.mahd = mahd;
@@ -42,10 +42,7 @@ public class ChiTietHDT {
     }
 
     public void xuat() {
-        System.out.format("%10s | ", mahd);
-        System.out.format("%10s |", makh);
-        System.out.format("%10s%n", mave);
-        System.out.println("Don gia: " + dongia);
+        System.out.format(" %10s | %13s | %10s | %8s | %15s ||\n", mahd, makh, mave, soluong, dongia);
     }
 
     public void setMahd(String mahd) {
@@ -79,7 +76,7 @@ public class ChiTietHDT {
     public int getSoluong() {
         return soluong;
     }
-
+    
     public int getDongia() {
         return dongia;
     }

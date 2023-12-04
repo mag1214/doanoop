@@ -1,3 +1,5 @@
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Scanner;
 
 public class HoaDonThu {
@@ -35,16 +37,34 @@ public class HoaDonThu {
         makh = sc.nextLine();
         System.out.print("Nhap ngay mua:");
         ngaymua = sc.nextLine();
+        while(true) {
+            if(checkDate(ngaymua)) {
+                break;
+            }
+            System.err.println("Dinh dang cua ngay phai la dd/MM/yyyy!!!");
+            System.err.println("Nhan Enter de nhap lai!!!");
+            sc.nextLine();
+            System.out.println("Nhap lai ngay mua: ");
+            String nm = sc.nextLine();
+            setNgaymua(nm);
+        }
         System.out.print("Nhap ma nhan vien: ");
         manv = sc.nextLine();
     }
 
     public void xuat() {
-        System.out.format("%10s | ", mahd);
-        System.out.format("%10s | ", makh);
-        System.out.format("%10s | ",manv);
-        System.out.format("%10s | ", ngaymua);
-        System.out.format("%15s%n", tonggia);
+        System.out.format(" %10s | %13s | %12s | %10s | %15s ||\n", mahd, makh, manv, ngaymua, tonggia); 
+    }
+
+    public boolean checkDate(String date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        sdf.setLenient(false);
+		try {
+			sdf.parse(date);
+		}catch(ParseException e) {
+			return false;
+		}
+		return true;
     }
 
     public void setMahd(String mahd) {
