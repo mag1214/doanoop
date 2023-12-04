@@ -10,8 +10,9 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class DanhSachKeHoachTour {
-    int n;
+    int n,a=0;
     static KeHoachTour[] kht;
+    DanhSachTour dst = new DanhSachTour();
     Scanner sc = new Scanner(System.in);
     public DanhSachKeHoachTour(){}
     public DanhSachKeHoachTour(int n) 
@@ -19,61 +20,91 @@ public class DanhSachKeHoachTour {
         this.n = n;
         kht = new KeHoachTour[n];
     }
-    public void nhap()
+    public void Nhap()
     {
-        String [] CacMaTour = new String[100];
         System.out.print("Nhap so danh sach ke hoach: ");
         n = sc.nextInt();
         sc.nextLine();
         kht = new KeHoachTour[n];
         for(int i = 0; i < n; i++)
         {
+            System.out.print("NHAP LAI KE HOACH THU "+(i+1)+"\n");
+            kht[i]=new KeHoachTour();
             kht[i].Nhap();
-            CacMaTour[i]=kht[i].getMaKeHoach();
-            for(int j=0 ; j <= i; j++)
-            {
-                if(kht[i].getMaKeHoach().equals(CacMaTour[j]))
-                {
-
-                }
-            }
+            kht[i].setMaTour(dst.MaTourTimThay(i));
+            GhiDuLieuVaoFile();
+            if(i>0)
+                MaDuyNhat(i);
         }
     }
-    public void DuLieuCung()
-    {
-        kht = new KeHoachTour[5];
-        kht[0]= new KeHoachTour("KH1", "T1", "NV1", "24/05/2000", "30/5/2000");
-        kht[1]= new KeHoachTour("KH2", "T2", "NV2", "07/05/2010", "30/5/2010");
-        kht[2]= new KeHoachTour("KH3", "T3", "NV3", "11/05/2016", "30/5/2016");
-        kht[3]= new KeHoachTour("KH4", "T4", "NV4", "19/05/2018", "30/5/2018");
-        kht[4]= new KeHoachTour("KH5", "T5", "NV5", "11/05/2019", "30/5/2019");
-    }
+    public void MaDuyNhat(int i) {
+		DocDuLieuTuFile();
+		String MaKeHoach;
+		String mkh = kht[i].getMaKeHoach();
+		do {
+			if(KiemTraMKH(mkh, i)) {
+				System.out.println();
+				Xuat();
+				System.err.println("\nKe hoach thu " + (i+1) + " co ma " + mkh + " bi trung ma ke hoach. An enter de tiep tuc");
+				sc.nextLine();
+				System.err.print("Nhap Lai Ma: ");
+				MaKeHoach = sc.nextLine();
+				kht[i].setMaKeHoach(MaKeHoach);
+				GhiDuLieuVaoFile();
+				mkh = kht[i].getMaKeHoach();
+			}
+		}while(KiemTraMKH(mkh, i));
+	}
+    public boolean KiemTraMKH(String makehoach, int k) {
+		for(int i = a - 1; i >= 0; i--) {
+			if(kht[i].getMaKeHoach().indexOf(makehoach) != -1 && i!= k) {
+				return true;
+			}
+		}
+		return false;
+	}
+    
     public void Xuat()
     {   
         n=kht.length;
-        for(int i=0; i<n; i++)
+        System.out.println("======================DANH SACH KE HOACH TOUR===================");
+        System.out.format("|| %9s |%9s |%7s |%12s |%12s ||\n",
+                  "MaKeHoach", "MaTour", "MaNhanVien", "NgayDi", "NgayVe");
+        try
         {
-            kht[i].Xuat();
-            System.out.println();
-        }
+            for(int i=0; i<n; i++)
+            {
+                kht[i].Xuat();
+                System.out.println();
+            }
+        }catch(NullPointerException npe) {
+			
+		}
+        
+        System.out.println("================================================================");
     }
     public void Them()
     {
+        int i=n;
         System.out.println("**********Nhap ke hoach muon them vao**********");
         kht = Arrays.copyOf(kht,n+1);
         kht[n]= new KeHoachTour();
         kht[n].Nhap();
         n++;
+        GhiDuLieuVaoFile();
+        MaDuyNhat(i);
         System.out.println("**********Da them ke hoach vao danh sach**********");
     } 
     public void Them(KeHoachTour x)
     {
-        n=kht.length;
+        int i=n;
         kht = Arrays.copyOf(kht,n+1);
         kht[n]=new KeHoachTour();
         KeHoachTour kh = new KeHoachTour(x);
         kht[n] = kh;
         n++;
+        GhiDuLieuVaoFile();
+        MaDuyNhat(i);
         System.out.println("**********Da them ke hoach vao danh sach**********");
     }
     public void Sua()
@@ -90,6 +121,8 @@ public class DanhSachKeHoachTour {
             System.out.println("******NHAP THONG TIN KE HOACH CAN SUA******");
             SuaSv.Nhap();
             kht[a]=SuaSv;
+            GhiDuLieuVaoFile();
+            MaDuyNhat(a);
         }
         else
         {
@@ -106,7 +139,10 @@ public class DanhSachKeHoachTour {
         {
             System.out.println("******NHAP THONG TIN KE HOACH CAN SUA******");
             SuaSv.Nhap();
+            GhiDuLieuVaoFile();
             kht[a]=SuaSv;
+            GhiDuLieuVaoFile();
+            MaDuyNhat(a);
         }
         else
             System.out.println("Khong tim thay");
@@ -125,6 +161,7 @@ public class DanhSachKeHoachTour {
                 kht[i]=kht[i+1];
             kht = Arrays.copyOf(kht,n-1);
             n--;
+            GhiDuLieuVaoFile();
         }
         else
         {
@@ -142,6 +179,7 @@ public class DanhSachKeHoachTour {
                 kht[i]=kht[i+1];
             kht = Arrays.copyOf(kht,n-1);
             n--;
+            GhiDuLieuVaoFile();
         }
         else 
             System.out.println("Khong tim thay ");
@@ -222,22 +260,33 @@ public class DanhSachKeHoachTour {
             System.out.println("khong tim thay ");
         }
     }
-    public void GhiDuLieuVaoF() throws IOException
+    public void GhiDuLieuVaoFile()
     {
         n = kht.length;
-        DataOutputStream out = new DataOutputStream(new FileOutputStream("KeHoachTour.txt"));
-        for(int i = 0; i < n; i++) {
-            out.writeUTF(kht[i].getMaKeHoach());
-            out.writeUTF(kht[i].getMaTour());
-            out.writeUTF(kht[i].getMaNhanVien());
-            out.writeUTF(kht[i].getNgaydi());
-            out.writeUTF(kht[i].getNgayVe());
+        try
+        {
+            DataOutputStream out = new DataOutputStream(new FileOutputStream("KeHoachTour.txt"));
+            try
+            {
+                for(int i = 0; i < n; i++) {
+                out.writeUTF(kht[i].getMaKeHoach());
+                out.writeUTF(kht[i].getMaTour());
+                out.writeUTF(kht[i].getMaNhanVien());
+                out.writeUTF(kht[i].getNgaydi());
+                out.writeUTF(kht[i].getNgayVe());
+                }
+            }
+            catch(NullPointerException npe) {}
+            out.close();
+        }   
+        catch(IOException e) 
+        {
+            e.printStackTrace();    
         }
-        out.close();
     }
 
     public void DocDuLieuTuFile() {
-       kht = new KeHoachTour[500];
+       kht = new KeHoachTour[100];
         int i = 0;
         try {
             DataInputStream in = new DataInputStream(new FileInputStream("KeHoachTour.txt"));
@@ -254,7 +303,7 @@ public class DanhSachKeHoachTour {
             } catch (EOFException e) {
 
             } finally {
-                n = i;
+                a = i;
                 kht = Arrays.copyOf(kht, n);
                 in.close();
             }
@@ -293,6 +342,14 @@ public class DanhSachKeHoachTour {
         System.out.println("| So Tour tu nam 2015 den 2020 | " +Count4+ " |");
         System.out.println("------------------------------------");
     }
-    public void GhiDuLieuVaoFile() {
+    public void DuLieuCung()
+    {
+        n=5;
+        kht = new KeHoachTour[n];
+        kht[0]= new KeHoachTour("KH1", dst.MaTourTimThay(0), "NV1", "24/05/2000", "30/5/2000");
+        kht[1]= new KeHoachTour("KH2", dst.MaTourTimThay(1), "NV2", "07/05/2010", "30/5/2010");
+        kht[2]= new KeHoachTour("KH3", dst.MaTourTimThay(2), "NV3", "11/05/2016", "30/5/2016");
+        kht[3]= new KeHoachTour("KH4", dst.MaTourTimThay(3), "NV4", "19/05/2018", "30/5/2018");
+        kht[4]= new KeHoachTour("KH5", dst.MaTourTimThay(4), "NV5", "11/05/2019", "30/5/2019");
     }
 }

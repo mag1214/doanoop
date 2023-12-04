@@ -32,8 +32,8 @@ public class TourTrongNuoc extends Tour{
     public void Xuat()
     {
         super.Xuat();
-        System.out.format("%5s\t | ", PhuongTien());
-        System.out.format("%5s\t |%n  ", TinhThanh);
+        System.out.format("%10s | ", PhuongTien());
+        System.out.format("%16s | %14s ||\n  ", TinhThanh,"NULL");
     }
     @Override
     public String PhuongTien() {

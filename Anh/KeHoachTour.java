@@ -66,8 +66,8 @@ public class KeHoachTour
     {
         System.out.print("Nhap ma ke hoach: ");
         MaKeHoach=sc.nextLine();
-        System.out.print("Nhap ma tour: ");
-        MaTour=sc.nextLine();
+        // System.out.print("Nhap ma tour: ");
+        // MaTour=dst.MaTourTimThay();
         System.out.print("Nhap ma nhan vien tour: ");
         MaNhanVien=sc.nextLine();
         System.out.print("Nhap ngay di: ");
@@ -77,10 +77,10 @@ public class KeHoachTour
     }
     public void Xuat()
     {
-        System.out.format("%5s\t | ", MaKeHoach);
-        System.out.format("%5s\t | ", MaTour);
-        System.out.format("%5s\t | ", MaNhanVien);
-        System.out.format("%5s\t | ", NgayDi);
-        System.out.format("%5s\t |", NgayVe);
+        System.out.format("|| %9s | ", MaKeHoach);
+        System.out.format("%8s | ", MaTour);
+        System.out.format("%9s | ", MaNhanVien);
+        System.out.format("%11s | ", NgayDi);
+        System.out.format("%11s ||", NgayVe);
     }
 }

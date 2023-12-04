@@ -40,9 +40,9 @@ public class TourNgoaiNuoc extends Tour{
     @Override public void Xuat()
     {
         super.Xuat();
-        System.out.format("%5s\t | ", PhuongTien());
-        System.out.format("%5s\t | ", QuocGia);
-        System.out.format("%5s\t |%n  ", ThoiHanVisa);
+        System.out.format("%10s | ", PhuongTien());
+        System.out.format("%16s | ", QuocGia);
+        System.out.format("%14s ||\n  ", ThoiHanVisa);
     }
     @Override public String PhuongTien() {
         return "May Bay";

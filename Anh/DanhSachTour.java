@@ -10,8 +10,7 @@ import java.util.Scanner;
 
 public class DanhSachTour {
     static Tour[] dst;
-    int n;
-    int SoTour=0;
+    int n,a=0;
     Scanner sc = new Scanner(System.in);
     public DanhSachTour(){}
     public DanhSachTour(int n) 
@@ -29,11 +28,13 @@ public class DanhSachTour {
     }
     public void Nhap()
     {
+        int i=0;
         System.out.print("Nhap so tour: ");
         n = sc.nextInt();
+        sc.nextLine();
         dst= new Tour[n];
         int number=-1;
-        while(SoTour<n)
+        while(i<n)
         {
             System.out.println("**********-Menu-NhapSinhVien*******");
             System.out.println("*       1.Nhap tour trong nuoc    *");
@@ -42,30 +43,63 @@ public class DanhSachTour {
             System.out.println("***********************************");
             System.out.print("Nhap loai tour ");
             number=sc.nextInt();
+            sc.nextLine();
             switch(number)
             {
                 case 1:
-                        System.out.print("Nhap Tour thu: "+SoTour);
+                        System.out.print("Nhap Tour thu: "+(i+1));
                         System.out.println();
-                        dst[SoTour]=new TourTrongNuoc();
-                        dst[SoTour].Nhap();
-                        SoTour++;
+                        dst[i]=new TourTrongNuoc();
+                        dst[i].Nhap();
+                        GhiDuLieuVaoFile();
+                        if(i>1)
+                            MaDuyNhat(i);
+                        i++;
                     break;
                 case 2:
-                        System.out.print("Nhap Tour thu: "+SoTour);
+                        System.out.print("Nhap Tour thu: "+(i+1));
                         System.out.println();
-                        dst[SoTour]=new TourNgoaiNuoc();
-                        dst[SoTour].Nhap();
-                        SoTour++;
+                        dst[i]=new TourNgoaiNuoc();
+                        dst[i].Nhap();
+                        GhiDuLieuVaoFile();
+                        if(i>1)
+                            MaDuyNhat(i);
+                        i++;
                     break;
                 case 0:
-                    SoTour=n;
+                    i=n;
                     break;   
                 default:
                     System.out.println("Nhap sai so vui long nhap lai!!!"); 
             }
         }
     }
+    public void MaDuyNhat(int i) {
+		DocDuLieuTuFile();
+		String MaTour;
+		String mkh = dst[i].getMaTour();
+		do {
+			if(KiemTraMT(mkh, i)) {
+				System.out.println();
+				Xuat();
+				System.err.println("\nTour thu " + (i+1) + " co ma " + mkh + " bi trung ma ke hoach. An enter de tiep tuc");
+				sc.nextLine();
+				System.err.print("Nhap Lai Ma: ");
+				MaTour = sc.nextLine();
+				dst[i].setMaTour(MaTour);
+				GhiDuLieuVaoFile();
+				mkh = dst[i].getMaTour();
+			}
+		}while(KiemTraMT(mkh, i));
+	}
+    public boolean KiemTraMT(String makehoach, int k) {
+		for(int i = a - 1; i >= 0; i--) {
+			if(dst[i].getMaTour().indexOf(makehoach) != -1 && i!= k) {
+				return true;
+			}
+		}
+		return false;
+	}
     public void NhapCung()
     {
 
@@ -80,22 +114,29 @@ public class DanhSachTour {
     }
     public void Xuat()
     {
-        System.out.println("Danh sach cac tour");
-        System.out.format("%5s\t|%5s\t|%5s\t|%5s\t|%5s\t|%5s\t|%5s\t|%5s\n",
-                  "Ma Tour", "Ten Tour", "Noi Khoi Hanh", "Noi den", "Thoi Diem Di","Phuong Tien", "Tinh Thanh/Quoc Gia", "Thoi Han ViSa");
-
-// Dùng %10s để đặt chiều rộng tối thiểu của mỗi trường, và - để căn lề sang trái.
-// Bạn có thể điều chỉnh các giá trị trong %10s để thích nghi với độ rộng mong muốn.
-
-        for(int i=0; i<n; i++)
+        System.out.println("============================================DANH SACH TOUR==============================================");
+        System.out.format("||%5s |%5s |%10s |%8s |%5s |%10s |%15s |%15s ||\n",
+                  "MaTour", "TenTour", "NoiKhoiHanh", "Noiden", "ThoiDiem Di","PhuongTien", "TinhThanh/QuocGia", "ThoiHanViSa");
+        try
         {
-            dst[i].Xuat();
-            dst[i].PhuongTien();
+            for(int i=0; i<n; i++)
+            {
+                dst[i].Xuat();
+                dst[i].PhuongTien();
+            }
         }
+        catch(NullPointerException npe) {
+			
+		}
+         System.out.println("======================================================================================================");
+    }
+    public String MaTourTimThay(int i)
+    {
+        return dst[i].getMaTour();
     }
     public void Them()
     {
-        int number=-1,ThemCuoi=n;
+        int number=-1,i=n;
             System.out.println("***********-Them-************");
             System.out.println("*  1.Them Tour trong nuoc   *");
             System.out.println("*   2.Them tour ngoai nuoc  *");
@@ -107,20 +148,26 @@ public class DanhSachTour {
             {
                 case 1:
                         dst = Arrays.copyOf(dst,n+1);
-                        System.out.print("Nhap Tour: "+SoTour);
+                        System.out.print("Nhap Tour can them vao");
                         System.out.println();
-                        dst[ThemCuoi]=new TourTrongNuoc();
-                        dst[ThemCuoi].Nhap();
+                        dst[i]=new TourTrongNuoc();
+                        dst[i].Nhap();
                         n++;
+                         GhiDuLieuVaoFile();
+                        if(i>1)
+                            MaDuyNhat(i);
                         System.out.println("**********Da them tour vao danh sach**********");
                     break;
                 case 2:
                         dst = Arrays.copyOf(dst,n+1);
-                        System.out.print("Nhap tour thu: "+SoTour);
+                        System.out.print("Nhap tour thu tour can them vao");
                         System.out.println();
-                        dst[ThemCuoi]=new TourNgoaiNuoc();
-                        dst[ThemCuoi].Nhap();
+                        dst[i]=new TourNgoaiNuoc();
+                        dst[i].Nhap();
                         n++;
+                        GhiDuLieuVaoFile();
+                        if(i>1)
+                            MaDuyNhat(i);
                         System.out.println("**********Da them tour vao danh sach**********");
                 case 0:
                     break;
@@ -128,22 +175,24 @@ public class DanhSachTour {
     }
     public void Them(TourTrongNuoc x)
     {
-        n=dst.length;
+        int i=n;
         dst = Arrays.copyOf(dst,n+1);
         dst[n]=new TourTrongNuoc();
-        Tour dst2 = new TourTrongNuoc(x);
-        dst[n]=dst2;
+        dst[n]=x;
         n++;
+        GhiDuLieuVaoFile();
+        MaDuyNhat(i);
         System.out.println("**********Da them Tour vao danh sach**********");
     }
     public void Them(TourNgoaiNuoc x)
     {
-        n=dst.length;
+        int i=n;
         dst = Arrays.copyOf(dst,n+1);
-        dst[n]=new TourNgoaiNuoc();
-        Tour dst2 = new TourNgoaiNuoc(x);
-        dst[n]=dst2;
+        dst[i]=new TourNgoaiNuoc();
+        dst[i]=x;
         n++;
+        GhiDuLieuVaoFile();
+        MaDuyNhat(i);
         System.out.println("**********Da them Tour vao danh sach**********");
     }
     public void XoaMa()
@@ -160,6 +209,7 @@ public class DanhSachTour {
                 dst[i]=dst[i+1];
             dst = Arrays.copyOf(dst,n-1);
             n--;
+            GhiDuLieuVaoFile();
         }
         else
         {
@@ -177,6 +227,7 @@ public class DanhSachTour {
                 dst[i]=dst[i+1];
             dst = Arrays.copyOf(dst,n-1);
             n--;
+            GhiDuLieuVaoFile();
         }
         else 
             System.out.println("Khong tim thay tour");
@@ -205,13 +256,19 @@ public class DanhSachTour {
                     if(ViTri!=-1)
                         System.out.println("******NHAP THONG TIN TOUR CAN SUA******");
                         LienThong.Nhap();
-                        dst[ViTri]=LienThong;        
+                        dst[ViTri]=LienThong;
+                        GhiDuLieuVaoFile();
+                        if(ViTri>1)
+                            MaDuyNhat(ViTri);        
                     break;
                 case 2:
                     TourNgoaiNuoc ChinhQuy= new TourNgoaiNuoc();;
                         System.out.println("******NHAP THONG TIN tour CAN SUA******");
                         ChinhQuy.Nhap();
-                        dst[ViTri]=ChinhQuy;           
+                        dst[ViTri]=ChinhQuy;    
+                        GhiDuLieuVaoFile();
+                        if(ViTri>1)
+                            MaDuyNhat(ViTri);         
                     break;
                 case 0:
                     break;
@@ -245,12 +302,17 @@ public class DanhSachTour {
                     System.out.println("******NHAP THONG TIN TOUR CAN SUA******");
                     TrongNuoc.Nhap();
                     dst[ViTri]=TrongNuoc;
+                    GhiDuLieuVaoFile();
+                    if(ViTri>1)
+                        MaDuyNhat(ViTri);
                     break;
                 case 2:
                     TourNgoaiNuoc ChinhQuy= new TourNgoaiNuoc();
                     System.out.println("******NHAP THONG TIN Tour CAN SUA******");
                     ChinhQuy.Nhap();
                     dst[ViTri]=ChinhQuy;
+                    if(ViTri>1)
+                        MaDuyNhat(ViTri);
                 case 0:
                     break;
                 default:
@@ -354,40 +416,51 @@ public class DanhSachTour {
         System.out.println("| So den nuoc An Do    | " +Count3+ " |");
         System.out.println("----------------------------");
     }
-    public void GhiDuLieuVaoFile() throws IOException
+    public void GhiDuLieuVaoFile()
     {
         n=dst.length;
-        DataOutputStream out = new DataOutputStream(new FileOutputStream("Tour.txt"));
-        for (int i = 0; i < n; i++) 
-        {       
-            if(dst[i] instanceof TourTrongNuoc)
+        try
+        {
+            DataOutputStream out = new DataOutputStream(new FileOutputStream("Tour.txt"));
+            try
             {
-                out.writeInt(1);
-                TourTrongNuoc ttn = new TourTrongNuoc();
-                ttn=(TourTrongNuoc)dst[i];
-                out.writeUTF(ttn.getMaTour());
-                out.writeUTF(ttn.getTenTour());
-                out.writeUTF(ttn.getNoiKhoiHanh());
-                out.writeUTF(ttn.getNoiDen());
-                out.writeUTF(ttn.getThoiDiemDi());
-                out.writeUTF(ttn.getTinhThanh());                        
-            }
-            else if(dst[i] instanceof TourNgoaiNuoc)
-            {
-                out.writeInt(2);
-                TourNgoaiNuoc tnc = new TourNgoaiNuoc();
-                tnc = (TourNgoaiNuoc)dst[i];
-                out.writeUTF(tnc.getMaTour());
-                out.writeUTF(tnc.getTenTour());
-                out.writeUTF(tnc.getNoiKhoiHanh());
-                out.writeUTF(tnc.getNoiDen());
-                out.writeUTF(tnc.getThoiDiemDi());
-                out.writeUTF(tnc.getQuocGia());
-                out.writeUTF(tnc.getThoiHanVisa()); 
+                for (int i = 0; i < n; i++) 
+                {       
+                    if(dst[i] instanceof TourTrongNuoc)
+                    {
+                        out.writeInt(1);
+                        TourTrongNuoc ttn = new TourTrongNuoc();
+                        ttn=(TourTrongNuoc)dst[i];
+                        out.writeUTF(ttn.getMaTour());
+                        out.writeUTF(ttn.getTenTour());
+                        out.writeUTF(ttn.getNoiKhoiHanh());
+                        out.writeUTF(ttn.getNoiDen());
+                        out.writeUTF(ttn.getThoiDiemDi());
+                        out.writeUTF(ttn.getTinhThanh());                        
+                    }
+                    else if(dst[i] instanceof TourNgoaiNuoc)
+                    {
+                        out.writeInt(2);
+                        TourNgoaiNuoc tnc = new TourNgoaiNuoc();
+                        tnc = (TourNgoaiNuoc)dst[i];
+                        out.writeUTF(tnc.getMaTour());
+                        out.writeUTF(tnc.getTenTour());
+                        out.writeUTF(tnc.getNoiKhoiHanh());
+                        out.writeUTF(tnc.getNoiDen());
+                        out.writeUTF(tnc.getThoiDiemDi());
+                        out.writeUTF(tnc.getQuocGia());
+                        out.writeUTF(tnc.getThoiHanVisa()); 
 
+                    }
+                }
             }
+            catch(NullPointerException npe) {}
+            out.close();    
         }
-        out.close();
+        catch(IOException e) 
+        {
+            e.printStackTrace();    
+        }
     }
     public void DocDuLieuTuFile() 
     {
@@ -400,9 +473,7 @@ public class DanhSachTour {
             {
                 while (in.available() > 0) 
                 {
-                    // Kiểm tra kiểu dữ liệu
                     int kieuDuLieu = in.readInt();
-                    // Đọc dữ liệu tùy thuộc vào kiểu dữ liệu
                     switch (kieuDuLieu)
                     {
                         case 1:
@@ -413,7 +484,7 @@ public class DanhSachTour {
                             ttn.setNoiDen(in.readUTF());
                             ttn.setThoiDiemDi(in.readUTF());
                             ttn.setTinhThanh(in.readUTF());
-                            dst[i]=ttn;
+                            dst[i]=(Tour)ttn;
                             i++;
                             break;
                         case 2:
@@ -425,7 +496,7 @@ public class DanhSachTour {
                             tnc.setThoiDiemDi(in.readUTF());
                             tnc.setQuocGia(in.readUTF());
                             tnc.setThoiHanVisa(in.readUTF());
-                            dst[i]=tnc;
+                            dst[i]=(Tour)tnc;
                             i++;
                             break;
                         default:
@@ -437,7 +508,7 @@ public class DanhSachTour {
             catch (EOFException e) { } 
             finally 
             {
-                n=i;
+                a=i;
                 dst = Arrays.copyOf(dst, n);
                 in.close();
             }

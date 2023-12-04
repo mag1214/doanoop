@@ -85,11 +85,11 @@ public abstract class Tour implements Serializable{
     }
     public void Xuat()
     {
-        System.out.format("%5s\t | ", MaTour);
-        System.out.format("%5s\t | ", TenTour);
-        System.out.format("%5s\t | ", NoiKhoiHanh);
-        System.out.format("%5s\t | ", NoiDen);
-        System.out.format("%5s\t |", ThoiDiemDi);
+        System.out.format("\n|| %5s | ", MaTour);
+        System.out.format("%6s | ", TenTour);
+        System.out.format("%10s | ", NoiKhoiHanh);
+        System.out.format("%7s | ", NoiDen);
+        System.out.format("%10s |", ThoiDiemDi);
     }
     public String toString() {
         return "Ma: " + getMaTour() + "\nTen: " + getTenTour() + "\nNoi khoi hah: " + getNoiKhoiHanh() + "\nNoi den:"+getNoiDen()
