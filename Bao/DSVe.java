@@ -11,6 +11,8 @@ public class DSVe {
     static Ve[] a;
     int n;
 
+    DSChiTietHDT ct;
+
     Scanner sc = new Scanner(System.in);
 
     public DSVe(){
@@ -31,6 +33,17 @@ public class DSVe {
         return false;
     }
 
+    public void checkId(int i) {
+        while(isIdExist(a[i].getMave(), i)) {
+            System.err.println("Ma ve vua nhap bi trung voi ma ve khac!!!");
+            System.err.println("Nhan Enter de nhap lai!!!");
+            sc.nextLine();
+            System.out.println("Nhap lai ma ve:");
+            String id = sc.nextLine();
+            a[i].setMave(id);
+        }
+    }
+
     public void nhap() throws IOException{
         System.out.print("Nhap n ve dau tien: ");
         n = sc.nextInt();
@@ -40,14 +53,7 @@ public class DSVe {
             a[i]= new Ve();
             a[i].nhap();
             if(i > 0) {
-                while(isIdExist(a[i].getMave(), i)) {
-                System.err.println("Ma ve vua nhap bi trung voi ma ve khac!!!");
-                System.err.println("Nhan Enter de nhap lai!!!");
-                sc.nextLine();
-                System.out.println("Nhap lai ma ve:");
-                String id = sc.nextLine();
-                a[i].setMave(id);
-                }
+                checkId(i);
             }
         }
         writeDataToFile();
@@ -69,14 +75,7 @@ public class DSVe {
         a[n] = new Ve();
         System.out.println("Nhap thong tin ve can them: ");
         a[n].nhap();
-        while(isIdExist(a[n].getMave(), n)) {
-            System.err.println("Ma khach hang vua nhap bi trung voi ma khach hang khac!!!");
-            System.err.println("Nhan Enter de nhap lai!!!");
-            sc.nextLine();
-            System.out.println("Nhap lai ma khach hang:");
-            String id = sc.nextLine();
-            a[n].setMave(id);
-        }
+        checkId(n);
         n++;
         writeDataToFile();
     }
@@ -86,6 +85,7 @@ public class DSVe {
         a = Arrays.copyOf(a, n + 1);
         a[n] = new Ve(x);
         n++;
+        checkId(n);
         writeDataToFile();
     }
     
@@ -98,14 +98,10 @@ public class DSVe {
             if(a[i].getMave().equals(id)) {
                 isExisted = true;
                 a[i].nhap();
-                while(isIdExist(a[i].getMave(), i)) {
-                    System.err.println("Ma ve vua nhap bi trung voi ma khach hang khac!!!");
-                    System.err.println("Nhan Enter de nhap lai!!!");
-                    sc.nextLine();
-                    System.out.println("Nhap lai ve:");
-                    String ma = sc.nextLine();
-                    a[i].setMave(ma);
-                }
+                checkId(i);
+                ct.readDataFromFile();
+                ct.changeIdVe(id, a[i].getMave());
+                ct.writeDataToFile();
                 writeDataToFile();
                 break;
             }
@@ -121,14 +117,10 @@ public class DSVe {
             if(a[i].getMave().equals(id)) {
                 isExisted = true;
                 a[i].nhap();
-                while(isIdExist(a[i].getMave(), i)) {
-                    System.err.println("Ma ve vua nhap bi trung voi ma khach hang khac!!!");
-                    System.err.println("Nhan Enter de nhap lai!!!");
-                    sc.nextLine();
-                    System.out.println("Nhap lai ve:");
-                    String ma = sc.nextLine();
-                    a[i].setMave(ma);
-                }
+                checkId(i);
+                ct.readDataFromFile();
+                ct.changeIdVe(id, a[i].getMave());
+                ct.writeDataToFile();
                 writeDataToFile();
                 break;
             }

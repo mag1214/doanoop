@@ -22,6 +22,22 @@ public class DSChiTietHDT {
         a = new ChiTietHDT[n];
     }
 
+    public void changeIdVe(String maveCu, String maveMoi) {
+        for(int i = 0; i < n; i++) {
+            if(a[i].getMave().equals(maveCu)) {
+                a[i].setMave(maveMoi);
+            }
+        }
+    }
+
+    public void changeIdHd(String mahdCu, String mahdMoi) {
+        for(int i = 0; i < n; i++) {
+            if(a[i].getMahd().equals(mahdCu)) {
+                a[i].setMahd(mahdMoi);
+            }
+        }
+    }
+
     public void nhap() throws IOException{
         System.out.print("Nhap n chi tiet hoa don dau tien: ");
         n = sc.nextInt();
@@ -37,7 +53,7 @@ public class DSChiTietHDT {
     public void xuat() {
         System.out.println("----------------------------Danh sach chi tiet hoa don----------------------------");
         System.out.println("----------------------------------------------------------------------------------");
-		System.out.format("|| %5s | %10s | %13s | %10s | %8s | %15s ||\n", "Stt", "Ma hoa don", "Ma khach hang", "Ma ve", "So luong", "Don gia");
+		System.out.format("|| %5s | %10s | %10s | %8s | %15s ||\n", "Stt", "Ma hoa don", "Ma ve", "So luong", "Don gia");
         for(int i = 0; i < n; i++) {
             System.out.format("|| %5d |", i + 1);
             a[i].xuat();
@@ -70,12 +86,7 @@ public class DSChiTietHDT {
         for (int i = 0; i < n; i++) {
             if(a[i].getMahd().equals(id)) {
                 isExisted = true;
-                System.out.print("Ma hoa don duoc sua thanh: ");
-                String mahd = sc.nextLine();
-                a[i].setMahd(mahd);
-                System.out.print("Ma khach hang duoc sua thanh: ");
-                String makh = sc.nextLine();
-                a[i].setMakh(makh);
+                a[i].nhap();
                 writeDataToFile();
                 break;
             }
@@ -90,12 +101,7 @@ public class DSChiTietHDT {
         for (int i = 0; i < n; i++) {
             if(a[i].getMahd().equals(id)) {
                 isExisted = true;
-                System.out.print("Ma hoa don duoc sua thanh: ");
-                String mahd = sc.nextLine();
-                a[i].setMahd(mahd);
-                System.out.print("Ma khach hang duoc sua thanh: ");
-                String makh = sc.nextLine();
-                a[i].setMakh(makh);
+                a[i].nhap();
                 writeDataToFile();
                 break;
             }
@@ -142,34 +148,6 @@ public class DSChiTietHDT {
         }  
         return null;
     }
-    
-    public void timkiemkh(){
-        System.out.print("Nhap ma khach hang muon tim: ");
-        String ma = sc.nextLine();
-        boolean isExisted = false;
-        n = a.length;
-        for(int i = 0; i < n; i++) {
-            if (a[i].getMakh().equals(ma)) {
-                isExisted = true;
-                a[i].xuat();
-            }
-        }
-        if(!isExisted) 
-            System.out.println("Khong tim thay ma khach hang!");
-    }
-
-    public void timkiemkh(String ma){
-        boolean isExisted = false;
-        n = a.length;
-        for(int i = 0; i < n; i++) {
-            if (a[i].getMakh().equals(ma)) {
-                isExisted = true;
-                a[i].xuat();
-            }
-        }
-        if(!isExisted) 
-            System.out.println("Khong tim thay ma khach hang!");
-    }
 
     public void xoa(){
         System.out.print("Nhap ma hoa don muon xoa: ");
@@ -203,11 +181,11 @@ public class DSChiTietHDT {
         }
     }
 
-    public int tongtien(String makh) {
+    public int tongtien(String mahd) {
         int sum = 0;
         n = a.length;
         for(int i = 0; i < n; i++) {
-            if(a[i].getMakh().equals(makh))
+            if(a[i].getMahd().equals(mahd))
                 sum += a[i].getDongia();
         }
         return sum;
@@ -218,7 +196,6 @@ public class DSChiTietHDT {
         DataOutputStream out = new DataOutputStream(new FileOutputStream("dataCtHdt.txt"));
         for(int i = 0; i < n; i++) {
             out.writeUTF(a[i].getMahd());
-            out.writeUTF(a[i].getMakh());
             out.writeUTF(a[i].getMave());
             out.writeInt(a[i].getSoluong());
         }
@@ -234,7 +211,6 @@ public class DSChiTietHDT {
                 while(true) {
                     a[i] = new ChiTietHDT();
                     a[i].setMahd(in.readUTF());
-                    a[i].setMakh(in.readUTF());
                     a[i].setMave(in.readUTF());
                     a[i].setSoluong(in.readInt());
                     i++;
@@ -265,46 +241,6 @@ public class DSChiTietHDT {
         System.out.print("Choose: ");
     }
 
-    public void showMenutimkiem(){
-        System.out.println("-----------Option-----------");
-        System.out.println("1. Tim kiem bang ma hoa don.");
-        System.out.println("2. Tim kiem bang ma khach hang.");
-        System.out.println("0. Thoat.");
-        System.out.println("----------------------------");
-        System.out.print("Choose: ");
-    }
-
-    public void Menutimkiem(){
-        String choose = null;
-        boolean exit = false;
-        showMenutimkiem();
-        while (true) {
-            choose = sc.nextLine();
-            switch (choose) {
-            case "1":
-                timkiem();
-                break;
-            case "2":
-                timkiem();
-                break;
-            case "3":
-                timkiemkh();
-                break;
-            case "0":
-                System.out.println("Da thoat!");
-                exit = true;
-                break;
-            default:
-                System.err.println("Loi! Hay chon lai:");
-                break;
-            }
-            if (exit) {
-                break;
-            }
-            showMenutimkiem();
-        }  
-    }
-
     public void Menu() throws IOException {
         String choose = null;
         boolean exit = false;
@@ -322,7 +258,7 @@ public class DSChiTietHDT {
                 sua();
                 break;
             case "4":
-                Menutimkiem();
+                timkiem();
                 break;
             case "5":
                 xuat();

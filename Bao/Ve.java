@@ -5,6 +5,7 @@ public class Ve {
     private String matour;
     private String loaive;
     private String giave;
+    DanhSachTour tour;
 
     Scanner sc = new Scanner(System.in);
 
@@ -29,6 +30,19 @@ public class Ve {
     public void nhap() {
         System.out.print("Nhap ma tour: ");
         matour = sc.nextLine();
+        while(true) {
+            tour.DocDuLieuTuFile();
+            if(tour.TimKiemMaTour(matour) != -1) {
+                break;
+            }
+            System.err.println("Ma tour vua nhap khong ton tai!!!");
+            System.err.println("Nhan Enter de nhap lai!!!");
+            sc.nextLine();
+            tour.Xuat();
+            System.out.println("Nhap lai ma tour:");
+            String id = sc.nextLine();
+            setMatour(id);
+        }
         System.out.print("Nhap ma ve: ");
         mave = sc.nextLine();
         System.out.print("Nhap loai ve: ");

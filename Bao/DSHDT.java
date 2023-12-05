@@ -14,16 +14,19 @@ public class DSHDT {
     static HoaDonThu[] a;
     int n;
 
+    DSChiTietHDT ct;
+    
     Scanner sc = new Scanner(System.in);
-
+    
     public DSHDT() {
+        
     }
-
+    
     public DSHDT(int n) {
         this.n = n;
         a = new HoaDonThu[n];
     }
-
+    
     public boolean isIdExist(String id, int x) {
         for(int i = 0; i < x; i++) {
             if(a[i].getMahd().equals(id)) {
@@ -32,7 +35,26 @@ public class DSHDT {
         }
         return false;
     }
-
+    
+    public void checkId (int i) {
+        while(isIdExist(a[i].getMahd(), i)) {
+            System.err.println("Ma hoa don vua nhap bi trung voi ma ve khac!!!");
+            System.err.println("Nhan Enter de nhap lai!!!");
+            sc.nextLine();
+            System.out.println("Nhap lai ma hoa don:");
+            String id = sc.nextLine();
+            a[i].setMahd(id);
+        }
+    }
+    
+    public void changeIdKh(String makhCu,String makhMoi) {
+        for(int i = 0; i < n; i++) {
+            if(a[i].getMakh().equals(makhCu)) {
+                a[i].setMakh(makhMoi);
+            }
+        }
+    }
+    
     public void nhap() throws IOException{
         System.out.print("Nhap n hoa don dau tien: ");
         n = sc.nextInt();
@@ -42,14 +64,7 @@ public class DSHDT {
             a[i]= new HoaDonThu();
             a[i].nhap();
             if(i > 0) {
-                while(isIdExist(a[i].getMahd(), i)) {
-                System.err.println("Ma ve vua nhap bi trung voi ma ve khac!!!");
-                System.err.println("Nhan Enter de nhap lai!!!");
-                sc.nextLine();
-                System.out.println("Nhap lai ma ve:");
-                String id = sc.nextLine();
-                a[i].setMahd(id);
-                }
+                checkId(i);
             }
         }
         writeDataToFile();
@@ -71,14 +86,7 @@ public class DSHDT {
         a[n] = new HoaDonThu();
         System.out.println("Nhap thong tin hoa don can them: ");
         a[n].nhap();
-        while(isIdExist(a[n].getMahd(), n)) {
-            System.err.println("Ma khach hang vua nhap bi trung voi ma khach hang khac!!!");
-            System.err.println("Nhan Enter de nhap lai!!!");
-            sc.nextLine();
-            System.out.println("Nhap lai ma khach hang:");
-            String id = sc.nextLine();
-            a[n].setMahd(id);
-        }
+        checkId(n);
         n++;
         writeDataToFile();
     }
@@ -88,6 +96,7 @@ public class DSHDT {
         a = Arrays.copyOf(a, n + 1);
         a[n] = new HoaDonThu(x);
         n++;
+        checkId(n);
         writeDataToFile();
     }
     
@@ -99,26 +108,11 @@ public class DSHDT {
         for (int i = 0; i < n; i++) {
             if(a[i].getMahd().equals(id)) {
                 isExisted = true;
-                System.out.print("Ma hoa don duoc sua thanh: ");
-                String mahd = sc.nextLine();
-                a[i].setMahd(mahd);
-                while(isIdExist(a[i].getMahd(), i)) {
-                    System.err.println("Ma ve vua nhap bi trung voi ma ve khac!!!");
-                    System.err.println("Nhan Enter de nhap lai!!!");
-                    sc.nextLine();
-                    System.out.println("Nhap lai ma ve:");
-                    String ve = sc.nextLine();
-                    a[i].setMahd(ve);
-                }
-                System.out.print("Ma khach hang duoc sua thanh: ");
-                String makh = sc.nextLine();
-                a[i].setMakh(makh);
-                System.out.print("Ma nhan vien duoc sua thanh: ");
-                String manv = sc.nextLine();
-                a[i].setManv(manv);
-                System.out.print("Ngay mua duoc sua thanh: ");
-                String ngaymua = sc.nextLine();
-                a[i].setNgaymua(ngaymua);
+                a[i].nhap();
+                checkId(i);
+                ct.readDataFromFile();
+                ct.changeIdHd(id, a[i].getMahd());
+                ct.writeDataToFile();
                 writeDataToFile();
                 break;
             }
@@ -133,26 +127,11 @@ public class DSHDT {
         for (int i = 0; i < n; i++) {
             if(a[i].getMahd().equals(id)) {
                 isExisted = true;
-                System.out.print("Ma hoa don duoc sua thanh: ");
-                String mahd = sc.nextLine();
-                a[i].setMahd(mahd);
-                while(isIdExist(a[i].getMahd(), i)) {
-                    System.err.println("Ma ve vua nhap bi trung voi ma ve khac!!!");
-                    System.err.println("Nhan Enter de nhap lai!!!");
-                    sc.nextLine();
-                    System.out.println("Nhap lai ma ve:");
-                    String ve = sc.nextLine();
-                    a[i].setMahd(ve);
-                }
-                System.out.print("Ma khach hang duoc sua thanh: ");
-                String makh = sc.nextLine();
-                a[i].setMakh(makh);
-                System.out.print("Ma nhan vien duoc sua thanh: ");
-                String manv = sc.nextLine();
-                a[i].setManv(manv);
-                System.out.print("Ngay mua duoc sua thanh: ");
-                String ngaymua = sc.nextLine();
-                a[i].setNgaymua(ngaymua);
+                a[i].nhap();
+                checkId(i);
+                ct.readDataFromFile();
+                ct.changeIdHd(id, a[i].getMahd());
+                ct.writeDataToFile();
                 writeDataToFile();
                 break;
             }

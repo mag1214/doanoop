@@ -7,8 +7,11 @@ public class HoaDonThu {
     private String makh;
     private String ngaymua;
     private String manv;
-    static DSChiTietHDT a;
-    private int tonggia = a.tongtien(makh);
+    DSChiTietHDT ct;
+    private int tonggia = ct.tongtien(mahd);
+
+    DSKH kh;
+    DanhSachNhanVien nv;
 
     Scanner sc = new Scanner(System.in);
 
@@ -35,6 +38,19 @@ public class HoaDonThu {
         mahd = sc.nextLine();
         System.out.print("Nhap ma khach hang: ");
         makh = sc.nextLine();
+        while(true) {
+            kh.readDataFromFile();
+            if(kh.timkiemma(makh) != -1) {
+                break;
+            }
+            System.err.println("Ma khach hang vua nhap khong ton tai!!!");
+            System.err.println("Nhan Enter de nhap lai!!!");
+            sc.nextLine();
+            kh.xuat();
+            System.out.println("Nhap lai ma khach hang:");
+            String id = sc.nextLine();
+            setMakh(id);
+        }
         System.out.print("Nhap ngay mua:");
         ngaymua = sc.nextLine();
         while(true) {
@@ -50,6 +66,19 @@ public class HoaDonThu {
         }
         System.out.print("Nhap ma nhan vien: ");
         manv = sc.nextLine();
+        while(true) {
+            nv.readDataFromFile();
+            if(nv.timkiemma(makh) != -1) {
+                break;
+            }
+            System.err.println("Ma nhan vien vua nhap khong ton tai!!!");
+            System.err.println("Nhan Enter de nhap lai!!!");
+            sc.nextLine();
+            nv.xuat();
+            System.out.println("Nhap lai ma nhan vien:");
+            String id = sc.nextLine();
+            setManv(id);
+        }
     }
 
     public void xuat() {

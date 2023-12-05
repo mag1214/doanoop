@@ -2,12 +2,12 @@ import java.util.Scanner;
 
 public class ChiTietHDT {
     private String mahd;
-    private String makh;
     private String mave;
     private int soluong;
-    static DSVe ve;
+    DSVe ve;
     private int dongia = Integer.parseInt(ve.timkiem(mave).getGiave()) * soluong;
 
+    DSHDT hd;
 
     Scanner sc = new Scanner(System.in);
 
@@ -15,16 +15,14 @@ public class ChiTietHDT {
         
     }   
 
-    public ChiTietHDT(String mahd, String makh,String mave, int soluong) {
+    public ChiTietHDT(String mahd,String mave, int soluong) {
         this.mahd = mahd;
-        this.makh = makh;
         this.soluong = soluong;
         this.mave = mave;
     }
 
     public ChiTietHDT(ChiTietHDT a) {
         mahd = a.mahd;
-        makh = a.makh;
         mave = a.mave;
         soluong = a.soluong;
     }
@@ -32,17 +30,41 @@ public class ChiTietHDT {
     public void nhap() {
         System.out.println("Nhap ma hoa don: ");
         mahd = sc.nextLine();
-        System.out.println("Nhap ma khach hang: ");
-        makh = sc.nextLine();
+        while(true) {
+            hd.readDataFromFile();
+            if(hd.timkiemma(mahd) != -1) {
+                break;
+            }
+            System.err.println("Ma hoa don vua nhap khong ton tai!!!");
+            System.err.println("Nhan Enter de nhap lai!!!");
+            sc.nextLine();
+            hd.xuat();
+            System.out.println("Nhap lai ma hoa don:");
+            String id = sc.nextLine();
+            setMahd(id);
+        }
         System.out.println("Nhap ma ve: ");
         mave = sc.nextLine();
+        while(true) {
+            ve.readDataFromFile();
+            if(ve.timkiemma(mave) != -1) {
+                break;
+            }
+            System.err.println("Ma ve vua nhap khong ton tai!!!");
+            System.err.println("Nhan Enter de nhap lai!!!");
+            sc.nextLine();
+            ve.xuat();
+            System.out.println("Nhap lai ma ve:");
+            String id = sc.nextLine();
+            setMave(id);
+        }
         System.out.println("Nhap so luong: ");
         soluong = sc.nextInt();
         sc.nextLine();
     }
 
     public void xuat() {
-        System.out.format(" %10s | %13s | %10s | %8s | %15s ||\n", mahd, makh, mave, soluong, dongia);
+        System.out.format(" %10s | %10s | %8s | %15s ||\n", mahd, mave, soluong, dongia);
     }
 
     public void setMahd(String mahd) {
@@ -51,14 +73,6 @@ public class ChiTietHDT {
 
     public String getMahd() {
         return mahd;
-    }
-
-    public void setMakh(String makh) {
-        this.makh = makh;
-    }
-
-    public String getMakh() {
-        return makh;
     }
 
     public void setMave(String mave) {
