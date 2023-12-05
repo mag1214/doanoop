@@ -97,26 +97,15 @@ public class DSVe {
         for (int i = 0; i < n; i++) {
             if(a[i].getMave().equals(id)) {
                 isExisted = true;
-                System.out.print("Ma tour duoc sua thanh: ");
-                String matour = sc.nextLine();
-                a[i].setMatour(matour);
-                System.out.print("Ma ve duoc sua thanh: ");
-                String mave = sc.nextLine();
-                a[i].setMave(mave);
+                a[i].nhap();
                 while(isIdExist(a[i].getMave(), i)) {
-                    System.err.println("Ma ve vua nhap bi trung voi ma ve khac!!!");
+                    System.err.println("Ma ve vua nhap bi trung voi ma khach hang khac!!!");
                     System.err.println("Nhan Enter de nhap lai!!!");
                     sc.nextLine();
-                    System.out.println("Nhap lai ma ve:");
-                    String ve = sc.nextLine();
-                    a[i].setMave(ve);
+                    System.out.println("Nhap lai ve:");
+                    String ma = sc.nextLine();
+                    a[i].setMave(ma);
                 }
-                System.out.print("Loai ve duoc sua thanh: ");
-                String loai = sc.nextLine();
-                a[i].setLoaive(loai);
-                System.out.print("Gia ve duoc sua thanh: ");
-                String gia=sc.nextLine();
-                a[i].setGiave(gia);
                 writeDataToFile();
                 break;
             }
@@ -131,26 +120,15 @@ public class DSVe {
         for (int i = 0; i < n; i++) {
             if(a[i].getMave().equals(id)) {
                 isExisted = true;
-                System.out.print("Ma tour duoc sua thanh: ");
-                String matour = sc.nextLine();
-                a[i].setMatour(matour);
-                System.out.print("Ma ve duoc sua thanh: ");
-                String mave = sc.nextLine();
-                a[i].setMave(mave);
+                a[i].nhap();
                 while(isIdExist(a[i].getMave(), i)) {
-                    System.err.println("Ma ve vua nhap bi trung voi ma ve khac!!!");
+                    System.err.println("Ma ve vua nhap bi trung voi ma khach hang khac!!!");
                     System.err.println("Nhan Enter de nhap lai!!!");
                     sc.nextLine();
-                    System.out.println("Nhap lai ma ve:");
-                    String ve = sc.nextLine();
-                    a[i].setMave(ve);
+                    System.out.println("Nhap lai ve:");
+                    String ma = sc.nextLine();
+                    a[i].setMave(ma);
                 }
-                System.out.print("Loai ve duoc sua thanh: ");
-                String loai = sc.nextLine();
-                a[i].setLoaive(loai);
-                System.out.print("Gia ve duoc sua thanh: ");
-                String gia=sc.nextLine();
-                a[i].setGiave(gia);
                 writeDataToFile();
                 break;
             }

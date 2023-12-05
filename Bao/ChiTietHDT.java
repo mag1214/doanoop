@@ -5,8 +5,8 @@ public class ChiTietHDT {
     private String makh;
     private String mave;
     private int soluong;
-    static DSVe a;
-    private int dongia = Integer.parseInt(a.timkiem(mave).getGiave()) * soluong;
+    static DSVe ve;
+    private int dongia = Integer.parseInt(ve.timkiem(mave).getGiave()) * soluong;
 
 
     Scanner sc = new Scanner(System.in);
