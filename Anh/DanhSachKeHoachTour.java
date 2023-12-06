@@ -86,14 +86,14 @@ public class DanhSachKeHoachTour {
     public void Them()
     {
         int i=n;
-        System.out.println("**********Nhap ke hoach muon them vao**********");
+        System.out.println("======Nhap ke hoach muon them vao======");
         kht = Arrays.copyOf(kht,n+1);
         kht[n]= new KeHoachTour();
         kht[n].Nhap();
         n++;
         GhiDuLieuVaoFile();
         MaDuyNhat(i);
-        System.out.println("**********Da them ke hoach vao danh sach**********");
+        System.out.println("======Da them ke hoach vao danh sach======");
     } 
     public void Them(KeHoachTour x)
     {
@@ -105,7 +105,7 @@ public class DanhSachKeHoachTour {
         n++;
         GhiDuLieuVaoFile();
         MaDuyNhat(i);
-        System.out.println("**********Da them ke hoach vao danh sach**********");
+        System.out.println("======Da them ke hoach vao danh sach======");
     }
     public void Sua()
     {
@@ -118,7 +118,7 @@ public class DanhSachKeHoachTour {
         a=TimKiem(MaSo);
         if(a!=-1)
         {
-            System.out.println("******NHAP THONG TIN KE HOACH CAN SUA******");
+            System.out.println("======NHAP THONG TIN KE HOACH CAN SUA======");
             SuaSv.Nhap();
             kht[a]=SuaSv;
             GhiDuLieuVaoFile();
@@ -137,7 +137,7 @@ public class DanhSachKeHoachTour {
         KeHoachTour SuaSv= new KeHoachTour();
         if(a!=-1)
         {
-            System.out.println("******NHAP THONG TIN KE HOACH CAN SUA******");
+            System.out.println("======NHAP THONG TIN KE HOACH CAN SUA======");
             SuaSv.Nhap();
             GhiDuLieuVaoFile();
             kht[a]=SuaSv;
@@ -191,6 +191,9 @@ public class DanhSachKeHoachTour {
         String MaSo;
         System.out.print("Nhap ma so can tim: ");
         MaSo=sc.nextLine();
+        System.out.println("==================DANH SACH KE HOACH TOUR TIM THAY===============");
+        System.out.format("|| %9s |%9s |%7s |%12s |%12s ||\n",
+        "MaKeHoach", "MaTour", "MaNhanVien", "NgayDi", "NgayVe");
         for(int i=0; i<n; i++)
         {
             if(kht[i].getMaKeHoach().equals(MaSo))
@@ -203,6 +206,7 @@ public class DanhSachKeHoachTour {
         {
             System.out.println("khong tim thay ");
         }
+        System.out.println("=================================================================");
     }
     //Tim kiem  theo ma so co tham so int
     public int TimKiem(String Ma)
@@ -224,6 +228,9 @@ public class DanhSachKeHoachTour {
     {
         n=kht.length;
         KeHoachTour flag=null;
+        System.out.println("==================DANH SACH KE HOACH TOUR TIM THAY===============");
+        System.out.format("|| %9s |%9s |%7s |%12s |%12s ||\n",
+        "MaKeHoach", "MaTour", "MaNhanVien", "NgayDi", "NgayVe");
         for(int i=0; i<n; i++)
         {
             if(kht[i].getMaKeHoach().equals(Ma))
@@ -232,6 +239,7 @@ public class DanhSachKeHoachTour {
                 flag=kht[i];
             }
         }
+        System.out.println("==================================================================");
         return flag;
     }
     public String TachNgay(String s)
@@ -247,6 +255,9 @@ public class DanhSachKeHoachTour {
         String Ngay;
         System.out.print("Nhap ngay di: ");
         Ngay=sc.nextLine();
+        System.out.println("==================DANH SACH KE HOACH TOUR TIM THAY===============");
+        System.out.format("|| %9s |%9s |%7s |%12s |%12s ||\n",
+        "MaKeHoach", "MaTour", "MaNhanVien", "NgayDi", "NgayVe");
         for(int i=0; i<n; i++)
         {
             if(kht[i].getNgaydi().contains(Ngay))
@@ -259,6 +270,7 @@ public class DanhSachKeHoachTour {
         {
             System.out.println("khong tim thay ");
         }
+        System.out.println("================================================================");
     }
     public void GhiDuLieuVaoFile()
     {
@@ -312,12 +324,6 @@ public class DanhSachKeHoachTour {
         }
     }
 
-    public String TachNam(String s)
-    {
-        String[] NgayThangNam = s.split("/");
-        String Nam=NgayThangNam[NgayThangNam.length-1];
-        return Nam;
-    }
     public void NamToChuc()
     {
         int Count1=0, Count2=0, Count3=0, Count4=0;
@@ -335,12 +341,51 @@ public class DanhSachKeHoachTour {
             else if(Nam>=2015 && Nam<=2020)
                 Count4++;
         }
-        System.out.println("----------Cac_Nam_To_Chuc-----------");
+        System.out.println("===========Cac_Nam_To_Chuc===========");
         System.out.println("| So Tour tu nam 2000 den 2004 | " +Count1+ " |");
         System.out.println("| So Tour tu nam 2005 den 2009 | " +Count2+ " |");
         System.out.println("| So Tour tu nam 2010 den 2014 | " +Count3+ " |");
         System.out.println("| So Tour tu nam 2015 den 2020 | " +Count4+ " |");
-        System.out.println("------------------------------------");
+        System.out.println("=====================================");
+    }
+
+    public void TimKiemNamToChuc()
+    {
+        int Nam, Nam1, Nam2,flag=0 ;
+        System.out.println("Nhap nam muon tim kiem tu");
+        Nam1=sc.nextInt();
+        System.out.println("Den Nam");
+        Nam2=sc.nextInt();
+        sc.nextLine();
+        if(Nam2<Nam1)
+        {
+            int Temp = Nam1;
+            Nam1 = Nam2;
+            Nam2 = Temp;
+        }
+        System.out.println("==================DANH SACH KE HOACH TOUR TIM THAY===============");
+        System.out.format("|| %9s |%9s |%7s |%12s |%12s ||\n",
+        "MaKeHoach", "MaTour", "MaNhanVien", "NgayDi", "NgayVe");
+        for(int i=0; i<n; i++)
+        {
+            Nam =  Integer.parseInt(TachNam(kht[i].getNgaydi()));
+            
+            if(Nam>=Nam1 && Nam<=Nam2)
+            {
+                kht[i].Xuat();
+                System.out.println();
+                flag=1;
+            }
+        }
+        if(flag==0)
+                System.out.println("Khong tim thay tour nao!\n");
+        System.out.println("==================================================================");
+    }
+    public String TachNam(String s)
+    {
+        String[] NgayThangNam = s.split("/");
+        String Nam=NgayThangNam[NgayThangNam.length-1];
+        return Nam;
     }
     public void DuLieuCung()
     {

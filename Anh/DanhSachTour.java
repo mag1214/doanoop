@@ -62,7 +62,7 @@ public class DanhSachTour {
                         dst[i]=new TourNgoaiNuoc();
                         dst[i].Nhap();
                         GhiDuLieuVaoFile();
-                        if(i>1)
+                        if(i>0)
                             MaDuyNhat(i);
                         i++;
                     break;
@@ -153,9 +153,8 @@ public class DanhSachTour {
                         dst[i]=new TourTrongNuoc();
                         dst[i].Nhap();
                         n++;
-                         GhiDuLieuVaoFile();
-                        if(i>1)
-                            MaDuyNhat(i);
+                        GhiDuLieuVaoFile();
+                        MaDuyNhat(i);
                         System.out.println("**********Da them tour vao danh sach**********");
                     break;
                 case 2:
@@ -166,8 +165,7 @@ public class DanhSachTour {
                         dst[i].Nhap();
                         n++;
                         GhiDuLieuVaoFile();
-                        if(i>1)
-                            MaDuyNhat(i);
+                        MaDuyNhat(i);
                         System.out.println("**********Da them tour vao danh sach**********");
                 case 0:
                     break;
@@ -331,6 +329,9 @@ public class DanhSachTour {
         String MaSo;
         System.out.print("Nhap ma tour can tim: ");
         MaSo=sc.nextLine();
+        System.out.println("============================================DANH SACH TOUR==============================================");
+        System.out.format("||%5s |%5s |%10s |%8s |%5s |%10s |%15s |%15s ||\n",
+                  "MaTour", "TenTour", "NoiKhoiHanh", "Noiden", "ThoiDiem Di","PhuongTien", "TinhThanh/QuocGia", "ThoiHanViSa");
         for(int i=0; i<n; i++)
         {
             if(dst[i].getMaTour().equals(MaSo))
@@ -343,6 +344,7 @@ public class DanhSachTour {
         {
             System.out.println("khong tim thay tour");
         }
+    System.out.println("============================================================================================================");
     }
         //Tim kiem tour theo ma so co tham so int
     public int TimKiemMaTour(String Ma)
@@ -364,6 +366,9 @@ public class DanhSachTour {
     {
         n=dst.length;
         Tour flag=null;
+        System.out.println("============================================DANH SACH TOUR==============================================");
+        System.out.format("||%5s |%5s |%10s |%8s |%5s |%10s |%15s |%15s ||\n",
+                  "MaTour", "TenTour", "NoiKhoiHanh", "Noiden", "ThoiDiem Di","PhuongTien", "TinhThanh/QuocGia", "ThoiHanViSa");
         for(int i=0; i<n; i++)
         {
             if(dst[i].getMaTour().equals(Ma))
@@ -372,6 +377,7 @@ public class DanhSachTour {
                 flag=dst[i];
             }
         }
+        System.out.println("========================================================================================================");
         return flag;
     }
     public void LoaiTour()
@@ -415,6 +421,28 @@ public class DanhSachTour {
         System.out.println("| So den nuoc Phap     | " +Count2+ " |");
         System.out.println("| So den nuoc An Do    | " +Count3+ " |");
         System.out.println("----------------------------");
+    }
+    public void TimKiemNoiDen()
+    {
+        String NoiDen;
+        int flag=0;
+        System.out.println("Nhap noi den can tim trong danh sach");
+        NoiDen=sc.nextLine();
+        System.out.println("============================================DANH SACH TOUR==============================================");
+        System.out.format("||%5s |%5s |%10s |%8s |%5s |%10s |%15s |%15s ||\n",
+                  "MaTour", "TenTour", "NoiKhoiHanh", "Noiden", "ThoiDiem Di","PhuongTien", "TinhThanh/QuocGia", "ThoiHanViSa");
+        for(int i = 0; i<n; i++)
+        {
+            if(dst[i].getNoiDen().contains(NoiDen))
+            {
+                dst[i].Xuat();
+                System.out.println();
+                flag=1;
+            }
+        }
+        System.out.println("========================================================================================================");
+        if(flag==0)
+            System.out.println("Khong tim thay tour nao!!!");
     }
     public void GhiDuLieuVaoFile()
     {

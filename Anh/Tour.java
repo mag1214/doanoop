@@ -72,16 +72,42 @@ public abstract class Tour implements Serializable{
     abstract public String PhuongTien();
     public void Nhap()
     {
-        System.out.print("Nhap ma tour: ");
-        MaTour=sc.nextLine();
-        System.out.print("Nhap ten tour: ");
-        TenTour=sc.nextLine();
-        System.out.print("Nhap noi khoi hanh: ");
-        NoiKhoiHanh=sc.nextLine();
-        System.out.print("Nhap noi den: ");
-        NoiDen=sc.nextLine();
-        System.out.print("Nhap noi di: ");
-        ThoiDiemDi=sc.nextLine();
+        do
+        {
+            System.out.println("Ma Tour bao gom 2 ky tu va khong duoc bo trong");
+            System.out.print("Nhap ma tour: ");
+            MaTour=sc.nextLine();
+            if(MaTour.length()!=2)
+                System.out.println("Vui long nhap ma tour co 2 ky tu!!!");
+        }while(MaTour.length()!=2);
+        do
+        {   
+            System.out.print("Nhap ten tour: ");
+            TenTour=sc.nextLine();
+            if(TenTour.length()==0)
+                System.out.println("Vui long khong de trong du lieu. Moi ban nhap lai!!");
+        }while(TenTour.length()==0);
+        do
+        {   
+            System.out.print("Nhap noi khoi hanh: ");
+            NoiKhoiHanh=sc.nextLine();
+            if(NoiKhoiHanh.length()==0)
+                System.out.println("Vui long khong de trong du lieu. Moi ban nhap lai!!");
+        }while(NoiKhoiHanh.length()==0);
+        do
+        {
+            System.out.print("Nhap noi den: ");
+            NoiDen=sc.nextLine();
+            if(NoiDen.length()==0)
+                System.out.println("Vui long khong de trong du lieu. Moi ban nhap lai!!");
+        }while (NoiDen.length()==0);
+        do
+        {
+            System.out.print("Nhap noi di: ");
+            ThoiDiemDi=sc.nextLine();
+            if(ThoiDiemDi.length()==0)
+                System.out.println("Vui long khong de trong du lieu. Moi ban nhap lai!!");
+        }while (ThoiDiemDi.length()==0);
     }
     public void Xuat()
     {

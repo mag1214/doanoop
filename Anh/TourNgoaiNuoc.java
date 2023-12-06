@@ -1,8 +1,8 @@
 package Class;
 
+
 public class TourNgoaiNuoc extends Tour{
     private String QuocGia, ThoiHanVisa;
-    
     public TourNgoaiNuoc()
     {}
     public TourNgoaiNuoc(String MaTour, String TenTour, String NoiKhoiHanh,String NoiDen, String ThoiDiemDi,String QuocGia,String ThoiHanVisa)
@@ -31,11 +31,27 @@ public class TourNgoaiNuoc extends Tour{
     @Override public void Nhap()
     {
         super.Nhap();
-        System.out.print("Nhap quoc gia den: ");
-        QuocGia=sc.nextLine();
+        do
+        {
+            System.out.println("Quoc gia den co tu 2 ky tu tro len");
+            System.out.print("Nhap quoc gia den: ");
+            QuocGia=sc.nextLine();
+            if(QuocGia.length()<2)
+                System.out.println("Vui long nhap so ky tu tu 2 tro len!!! Moi Moi ban nhap lai");
+        }while(QuocGia.length()<2);
+        
+        NgayThangNam validator = new KiemTraDinhDang("dd/MM/yyyy");
+        do {
+        System.out.println("Vui long nhap theo dinh dang DD/MM/YYYY");
         System.out.print("Nhap thoi han visa: ");
-        ThoiHanVisa=sc.nextLine();
+        ThoiHanVisa = sc.nextLine();
 
+        if (!validator.Check(ThoiHanVisa)) {
+        System.out.println("Nhap sai dinh dang vui long nhap lai");
+        }
+        }while (!validator.Check(ThoiHanVisa));
+
+        
     }
     @Override public void Xuat()
     {
