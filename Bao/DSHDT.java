@@ -36,6 +36,19 @@ public class DSHDT {
         return false;
     }
     
+    public boolean isIdExist(String id) {
+        int count = 0;
+        for(int i = 0; i < n; i++) {
+            if(a[i].getMahd().equals(id)) {
+                count++;
+            }
+        }
+        if(count == 2) {
+            return true;
+        }
+        return false;
+    }
+
     public void checkId (int i) {
         while(isIdExist(a[i].getMahd(), i)) {
             System.err.println("Ma hoa don vua nhap bi trung voi ma ve khac!!!");
@@ -109,7 +122,14 @@ public class DSHDT {
             if(a[i].getMahd().equals(id)) {
                 isExisted = true;
                 a[i].nhap();
-                checkId(i);
+                while(isIdExist(a[i].getMahd(), i)) {
+                    System.err.println("Ma hoa don vua nhap bi trung voi ma ve khac!!!");
+                    System.err.println("Nhan Enter de nhap lai!!!");
+                    sc.nextLine();
+                    System.out.println("Nhap lai ma hoa don:");
+                    String ma = sc.nextLine();
+                    a[i].setMahd(ma);
+                }
                 ct.readDataFromFile();
                 ct.changeIdHd(id, a[i].getMahd());
                 ct.writeDataToFile();
@@ -128,7 +148,14 @@ public class DSHDT {
             if(a[i].getMahd().equals(id)) {
                 isExisted = true;
                 a[i].nhap();
-                checkId(i);
+                while(isIdExist(a[i].getMahd(), i)) {
+                    System.err.println("Ma hoa don vua nhap bi trung voi ma ve khac!!!");
+                    System.err.println("Nhan Enter de nhap lai!!!");
+                    sc.nextLine();
+                    System.out.println("Nhap lai ma hoa don:");
+                    String ma = sc.nextLine();
+                    a[i].setMahd(ma);
+                }
                 ct.readDataFromFile();
                 ct.changeIdHd(id, a[i].getMahd());
                 ct.writeDataToFile();
@@ -235,8 +262,19 @@ public class DSHDT {
             System.out.println("Khong tim thay ma nhan vien!");
     }
 
+    public boolean checkDate(String date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        sdf.setLenient(false);
+		try {
+			sdf.parse(date);
+		}catch(ParseException e) {
+			return false;
+		}
+		return true;
+    }
+
     private Date changeDate(String dateString) {
-        String pattern = "dd-MM-yyyy HH:mm:ss"; 
+        String pattern = "dd-MM-yyyy"; 
         SimpleDateFormat sdf = new SimpleDateFormat(pattern);
         try {
             return sdf.parse(dateString);
@@ -257,7 +295,21 @@ public class DSHDT {
     public void timkiemtheongay() {
         System.out.println("Nhap khung thoi gian muon xuat hoa don: ");
         String time1 = sc.nextLine();
+        while(!checkDate(time1)) {
+            System.err.println("Dinh dang cua ngay phai la dd/MM/yyyy!!!");
+            System.err.println("Nhan Enter de nhap lai!!!");
+            sc.nextLine();
+            System.out.println("Nhap lai ngay mua: ");
+            time1 = sc.nextLine();
+        }
         String time2 = sc.nextLine();
+        while(!checkDate(time2)) {
+            System.err.println("Dinh dang cua ngay phai la dd/MM/yyyy!!!");
+            System.err.println("Nhan Enter de nhap lai!!!");
+            sc.nextLine();
+            System.out.println("Nhap lai ngay mua: ");
+            time2 = sc.nextLine();
+        }
         swapDate(time1, time2);
         n = a.length;
         for(int i = 0; i < n; i++) {

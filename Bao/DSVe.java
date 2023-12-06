@@ -33,6 +33,19 @@ public class DSVe {
         return false;
     }
 
+    public boolean isIdExist(String id) {
+        int count = 0;
+        for(int i = 0; i < n; i++) {
+            if(a[i].getMave().equals(id)) {
+                count++;
+            }
+        }
+        if(count == 2) {
+            return true;
+        }
+        return false;
+    }
+
     public void checkId(int i) {
         while(isIdExist(a[i].getMave(), i)) {
             System.err.println("Ma ve vua nhap bi trung voi ma ve khac!!!");
@@ -98,7 +111,14 @@ public class DSVe {
             if(a[i].getMave().equals(id)) {
                 isExisted = true;
                 a[i].nhap();
-                checkId(i);
+                while(isIdExist(a[i].getMave())) {
+                    System.err.println("Ma ve vua nhap bi trung voi ma ve khac!!!");
+                    System.err.println("Nhan Enter de nhap lai!!!");
+                    sc.nextLine();
+                    System.out.println("Nhap lai ma ve:");
+                    String ma = sc.nextLine();
+                    a[i].setMave(ma);
+                }
                 ct.readDataFromFile();
                 ct.changeIdVe(id, a[i].getMave());
                 ct.writeDataToFile();
@@ -117,7 +137,14 @@ public class DSVe {
             if(a[i].getMave().equals(id)) {
                 isExisted = true;
                 a[i].nhap();
-                checkId(i);
+                while(isIdExist(a[i].getMave())) {
+                    System.err.println("Ma ve vua nhap bi trung voi ma ve khac!!!");
+                    System.err.println("Nhan Enter de nhap lai!!!");
+                    sc.nextLine();
+                    System.out.println("Nhap lai ma ve:");
+                    String ma = sc.nextLine();
+                    a[i].setMave(ma);
+                }
                 ct.readDataFromFile();
                 ct.changeIdVe(id, a[i].getMave());
                 ct.writeDataToFile();
@@ -194,6 +221,16 @@ public class DSVe {
         }
         if(!isExisted) 
             System.out.println("Khong tim thay ma tour! ");
+    }
+
+    public int timkiemmatour(String ma) {
+        int count = 0;
+        for(int i = 0; i < n; i++) {
+            if(a[i].getMatour().equals(ma)) {
+                count++;
+            }
+        }
+        return count;
     }
 
     public void xoa(){

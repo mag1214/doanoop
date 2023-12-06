@@ -36,6 +36,19 @@ public class DSKH {
         return false;
     }
 
+    public boolean isIdExist(String id) {
+        int count = 0;
+        for(int i = 0; i < n; i++) {
+            if(a[i].getMa().equals(id)) {
+                count++;
+            }
+        }
+        if(count == 2) {
+            return true;
+        }
+        return false;
+    }
+
     public void checkId(int i) {
         while(isIdExist(a[i].getMa(), i)) {
             System.err.println("Ma khach hang vua nhap bi trung voi ma khach hang khac!!!");
@@ -101,7 +114,14 @@ public class DSKH {
             if(a[i].getMa().equals(id)) {
                 isExisted = true;
                 a[i].nhap();
-                checkId(i);
+                while(isIdExist(a[i].getMa())) {
+                    System.err.println("Ma khach hang vua nhap bi trung voi ma khach hang khac!!!");
+                    System.err.println("Nhan Enter de nhap lai!!!");
+                    sc.nextLine();
+                    System.out.println("Nhap lai ma khach hang:");
+                    String ma = sc.nextLine();
+                    a[i].setMa(ma);
+                }
                 hd.readDataFromFile();
                 hd.changeIdKh(id, a[i].getMa());
                 hd.writeDataToFile();
@@ -120,7 +140,14 @@ public class DSKH {
             if(a[i].getMa().equals(id)) {
                 isExisted = true;
                 a[i].nhap();
-                checkId(i);
+                while(isIdExist(a[i].getMa())) {
+                    System.err.println("Ma khach hang vua nhap bi trung voi ma khach hang khac!!!");
+                    System.err.println("Nhan Enter de nhap lai!!!");
+                    sc.nextLine();
+                    System.out.println("Nhap lai ma khach hang:");
+                    String ma = sc.nextLine();
+                    a[i].setMa(ma);
+                }
                 hd.readDataFromFile();
                 hd.changeIdKh(id, a[i].getMa());
                 hd.writeDataToFile();
