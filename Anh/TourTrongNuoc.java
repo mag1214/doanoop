@@ -25,8 +25,13 @@ public class TourTrongNuoc extends Tour{
     public void Nhap()
     {
         super.Nhap();
-        System.out.print("Nhap tinh thanh cua dia danh den: ");
-        TinhThanh=sc.nextLine();
+        do
+        {
+            System.out.print("Nhap tinh thanh cua dia danh den: ");
+            TinhThanh=sc.nextLine();
+            if(TinhThanh.length()<5)
+                System.out.println("Du lieu nhap vao co so ky tu lon hon 5!!Vui long nhap lai");
+        }while(TinhThanh.length()<5);
     }
     @Override 
     public void Xuat()
