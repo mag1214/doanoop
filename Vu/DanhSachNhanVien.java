@@ -13,6 +13,7 @@ import java.io.IOException;
 public class DanhSachNhanVien {
     NhanVien[] a;
     int n;
+    int v = 0;
     Scanner sc = new Scanner(System.in);
     private String ngaysinh;
     public DanhSachNhanVien(){}
@@ -309,5 +310,36 @@ public class DanhSachNhanVien {
        
         }
     }
+    
+    public void MaDuyNhat(int i) throws IOException
+    {
+        readDataFromFile();
+        String mahuongdanvien;
+        String mhdv = a[i].getMahuongdanvien();
+        do
+        {
+            if (KiemTraMNV(mhdv,i)) {
+                System.out.println();
+                xuat();
+                System.err.println("\nHuong Dan Vien thu " + (i+1) + "co ma " +mhdv + "bi trung voi ma huong dan vien. An enter de tiep tuc!");
+                sc.nextLine();
+                System.err.print("Nhap lai ma: ");
+                mahuongdanvien = sc.nextLine();
+                a[i].setMaHuongDanVien(mahuongdanvien);
+                writeDataToFile();
+                mhdv = a[i].getMahuongdanvien();
+            }
+        }
+        while(KiemTraMNV(mhdv,i));
+    }
 
+
+    public boolean KiemTraMNV(String mahuongdanvien, int k) {
+		for(int i = v - 1; i >= 0; i--) {
+			if(a[i].getMahuongdanvien().indexOf(mahuongdanvien) != -1 && i!= k) {
+				return true;
+			}
+		}
+		return false;
+	}
 }
